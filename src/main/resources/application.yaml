@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: adventure
+  datasource:
+    url: jdbc:postgresql://localhost:5432/adventure
+    username: user
+    password: password
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: true

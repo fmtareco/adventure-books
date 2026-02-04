@@ -1,0 +1,45 @@
+package prs.fmtareco.adventure.model;
+
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+import prs.fmtareco.adventure.exceptions.InvalidEnumValueException;
+
+import java.io.Serializable;
+
+@Entity
+@Table(name = "consequences")
+@Getter
+@Setter
+public class Consequence {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @OneToOne(optional = false)
+    @JoinColumn(name = "option_id")
+    private Option option;
+
+    @Column(nullable = false)
+    private Integer value;
+
+    @Lob
+    private String text;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Type type;
+
+    public enum Type implements Serializable {
+        GAIN_HEALTH,
+        LOSE_HEALTH;
+        public static Type from(String type) {
+            try {
+                return Type.valueOf(type);
+            } catch (IllegalArgumentException e) {
+                throw new InvalidEnumValueException("Consequence Type", type, Type.values().toString());
+            }
+        }
+    }
+}
