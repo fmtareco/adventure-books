@@ -6,6 +6,8 @@ import lombok.Setter;
 import prs.fmtareco.adventure.exceptions.InvalidEnumValueException;
 
 import java.io.Serializable;
+import java.util.EnumSet;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "consequences")
@@ -38,8 +40,11 @@ public class Consequence {
             try {
                 return Type.valueOf(type);
             } catch (IllegalArgumentException e) {
-                throw new InvalidEnumValueException("Consequence Type", type, Type.values().toString());
+                throw new InvalidEnumValueException("Consequence Type", type,valuesToString());
             }
+        }
+        public static String valuesToString() {
+            return EnumSet.allOf(Type.class).stream().map(Enum::toString).collect(Collectors.joining(","));
         }
     }
 }

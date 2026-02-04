@@ -6,7 +6,11 @@ import lombok.Setter;
 import prs.fmtareco.adventure.exceptions.InvalidEnumValueException;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.EnumSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "books")
@@ -24,6 +28,14 @@ public class Book {
     @Column(nullable = false)
     private String author;
 
+
+    @OneToMany(
+            mappedBy = "book",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<Section> sections = new ArrayList<>();
+
     @ManyToMany
     @JoinTable(
             name = "book_categories",
@@ -37,15 +49,49 @@ public class Book {
     private Difficulty difficulty;
 
     public enum Difficulty implements Serializable {
-        Easy,
-        Medium,
-        Hard;
+        EASY,
+        MEDIUM,
+        HARD;
         public static Difficulty from(String difficulty) {
             try {
                 return Difficulty.valueOf(difficulty);
             } catch (IllegalArgumentException e) {
-                throw new InvalidEnumValueException("Difficulty", difficulty, Difficulty.values().toString());
+                throw new InvalidEnumValueException("Difficulty", difficulty, valuesToString());
             }
         }
+        public static String valuesToString() {
+            return EnumSet.allOf(Difficulty.class).stream().map(Enum::toString).collect(Collectors.joining(","));
+        }
+    }
+
+    public void addSection(Section section) {
+        sections.add(section);
+        section.setBook(this);
+    }
+
+    public boolean hasOneOnlyBeginSection() {
+        return (sections.stream().filter(s -> s.getType() == Section.Type.BEGIN).count()==1);
+    }
+    public boolean hasAtLeastOneEndSection() {
+        return sections.stream().anyMatch(s -> s.getType() == Section.Type.END);
+    }
+    public boolean hasInvalidGoToSection() {
+        return sections.stream()
+            .flatMap(s -> s.getOptions().stream())
+            .anyMatch(o -> sections.stream().noneMatch(sec -> sec.getSectionNumber().equals(o.getGotoSectionNumber())));
+    }
+    public boolean hasNonFinalSectionWithoutOptions() {
+        return sections.stream()
+                .filter(s -> s.getType() != Section.Type.END)
+                .anyMatch(s -> s.getOptions().isEmpty());
+    }
+
+    public boolean isValid() {
+        if (!hasOneOnlyBeginSection() ||
+            !hasAtLeastOneEndSection() ||
+            hasInvalidGoToSection() ||
+            hasNonFinalSectionWithoutOptions())
+            return false;
+        return true;
     }
 }

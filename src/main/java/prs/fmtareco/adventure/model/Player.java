@@ -6,6 +6,8 @@ import lombok.Setter;
 import prs.fmtareco.adventure.exceptions.InvalidEnumValueException;
 
 import java.io.Serializable;
+import java.util.EnumSet;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "players")
@@ -36,12 +38,15 @@ public class Player {
         PAUSED,
         FAILED,
         SUCCEEDED;
-        public static Section.Type from(String type) {
+        public static Status from(String type) {
             try {
-                return Section.Type.valueOf(type);
+                return Status.valueOf(type);
             } catch (IllegalArgumentException e) {
-                throw new InvalidEnumValueException("Player Status", type, Status.values().toString());
+                throw new InvalidEnumValueException("Player Status", type,valuesToString());
             }
+        }
+        public static String valuesToString() {
+            return EnumSet.allOf(Status.class).stream().map(Enum::toString).collect(Collectors.joining(","));
         }
     }
 
