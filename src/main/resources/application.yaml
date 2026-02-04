@@ -8,6 +8,8 @@ spring:
   jpa:
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-        format_sql: true
-    show-sql: true
+        ddl-auto: none
+  sql:
+    init:
+      mode: always
+      platform: postgres
