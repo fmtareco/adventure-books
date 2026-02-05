@@ -12,7 +12,6 @@ import prs.fmtareco.adventure.model.Book;
 import prs.fmtareco.adventure.repository.BookRepository;
 import tools.jackson.databind.ObjectMapper;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 @Component
