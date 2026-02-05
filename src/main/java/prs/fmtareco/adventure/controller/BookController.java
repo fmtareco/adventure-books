@@ -31,6 +31,7 @@ public class BookController {
             @RequestParam(required = false) String author,
             @RequestParam(required = false) String category,
             @RequestParam(required = false) String difficulty,
+            @RequestParam(defaultValue = "true") boolean onlyValid,
             @RequestParam(value = "page", defaultValue = "0" ) int page,
             @RequestParam(value = "size", defaultValue = "3" ) int size,
             @RequestParam  (defaultValue = "true") boolean ascending
@@ -45,6 +46,7 @@ public class BookController {
                     Optional.ofNullable(author),
                     Optional.ofNullable(category),
                     Optional.ofNullable(difficulty),
+                    onlyValid,
                     pageable
                 )
         );

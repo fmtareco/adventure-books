@@ -1,8 +1,12 @@
 package prs.fmtareco.adventure.model;
 
 import jakarta.persistence.*;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.Hibernate;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 import prs.fmtareco.adventure.exceptions.InvalidEnumValueException;
 
 import java.io.Serializable;
@@ -25,10 +29,13 @@ public class Book {
     @Column(nullable = false)
     private String author;
 
+    @Column(name = "book_valid", nullable = false)
+    private boolean bookValid;
 
     @OneToMany(
             mappedBy = "book",
             cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
             orphanRemoval = true
     )
     private List<Section> sections = new ArrayList<>();
@@ -62,23 +69,30 @@ public class Book {
     }
 
     public void addSection(Section section) {
-        sections.add(section);
+        getSections().add(section);
         section.setBook(this);
     }
 
+
+    //---------------------------------------------------------------------------------------//
+    //                              book validation rules                                    //
+    //---------------------------------------------------------------------------------------//
+
     public boolean hasOneOnlyBeginSection() {
-        return (sections.stream().filter(s -> s.getType() == Section.Type.BEGIN).count()==1);
+         return getSections().stream()
+                 .filter(s -> s.getType() == Section.Type.BEGIN).count() ==1;
     }
     public boolean hasAtLeastOneEndSection() {
-        return sections.stream().anyMatch(s -> s.getType() == Section.Type.END);
+        return getSections().stream()
+                .anyMatch(s -> s.getType() == Section.Type.END);
     }
     public boolean hasInvalidGoToSection() {
-        return sections.stream()
+        return getSections().stream()
             .flatMap(s -> s.getOptions().stream())
-            .anyMatch(o -> sections.stream().noneMatch(sec -> sec.getSectionNumber().equals(o.getGotoSectionNumber())));
+            .anyMatch(o -> getSections().stream().noneMatch(sec -> sec.getSectionNumber().equals(o.getGotoSectionNumber())));
     }
     public boolean hasNonFinalSectionWithoutOptions() {
-        return sections.stream()
+        return getSections().stream()
                 .filter(s -> s.getType() != Section.Type.END)
                 .anyMatch(s -> s.getOptions().isEmpty());
     }

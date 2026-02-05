@@ -38,9 +38,11 @@ public class BookService {
             Optional<String> author,
             Optional<String> category,
             Optional<String> difficulty,
+            boolean onlyValid,
             Pageable pageable) {
-        return repo.findAll(byFilters(title,author,category, difficulty), pageable)
+        return repo.findAll(byFilters(title,author,category, difficulty, onlyValid), pageable)
                 .stream()
+                .filter(book -> !onlyValid || book.isValid())
                 .map(this::toBookResponse)
                 .toList();
     }
@@ -64,6 +66,7 @@ public class BookService {
                 .id(book.getId())
                 .author(book.getAuthor())
                 .title(book.getTitle())
+                .bookValid(book.isBookValid())
                 .categories(
                         book.getCategories().stream()
                                 .map(Category::getName)

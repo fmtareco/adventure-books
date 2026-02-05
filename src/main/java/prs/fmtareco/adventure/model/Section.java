@@ -33,8 +33,8 @@ public class Section {
     @JoinColumn(name = "book_id")
     private Book book;
 
-    @Lob
-    @Column(nullable = false)
+    @Column(columnDefinition = "TEXT", nullable = false)
+    @Basic(fetch = FetchType.LAZY)
     private String text;
 
     @OneToMany(mappedBy = "section", cascade = CascadeType.ALL, orphanRemoval = true)

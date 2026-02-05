@@ -18,8 +18,7 @@ public class Option {
     @JoinColumn(name = "section_id")
     private Section section;
 
-    @Lob
-    @Column(nullable = false)
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String description;
 
     @Column(name = "goto_section_number", nullable = false)

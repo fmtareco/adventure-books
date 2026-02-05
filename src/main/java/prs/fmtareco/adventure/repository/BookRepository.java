@@ -31,9 +31,14 @@ public interface BookRepository extends JpaRepository<Book, Long>, JpaSpecificat
                 Optional<String> title,
                 Optional<String> author,
                 Optional<String> category,
-                Optional<String> difficulty) {
+                Optional<String> difficulty,
+                boolean onlyValid) {
         return (root, query, builder) -> {
             List<Predicate> predicates = new ArrayList<>();
+
+            if (onlyValid) {
+                predicates.add(builder.isTrue(root.get("bookValid")));
+            }
 
             author.filter(a -> !a.isBlank())
                     .map(String::toLowerCase)

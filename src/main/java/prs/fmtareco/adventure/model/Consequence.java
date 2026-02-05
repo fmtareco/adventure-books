@@ -26,7 +26,7 @@ public class Consequence {
     @Column(nullable = false)
     private Integer value;
 
-    @Lob
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String text;
 
     @Enumerated(EnumType.STRING)

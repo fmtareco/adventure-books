@@ -26,9 +26,10 @@ public class BookMapper {
         book.setTitle(json.title());
         book.setAuthor(json.author());
         book.setDifficulty(json.difficulty());
-
         fromJsonSections(book, json);
         fromJsonCategories(book, json);
+        
+        book.setBookValid(book.isValid());
 
         return book;
     }
