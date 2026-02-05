@@ -1,13 +1,19 @@
 package prs.fmtareco.adventure.service;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import prs.fmtareco.adventure.dtos.BookResponse;
 import prs.fmtareco.adventure.model.Book;
 import prs.fmtareco.adventure.model.Category;
 import prs.fmtareco.adventure.repository.BookRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static prs.fmtareco.adventure.repository.BookRepository.byFilters;
 
 @Service
 public class BookService {
@@ -19,13 +25,25 @@ public class BookService {
         this.repo = repo;
     }
 
-    public List<BookResponse> listAllBooks() {
+    public List<BookResponse> listAll() {
         return repo.findAll()
                 .stream()
                 .map(this::toBookResponse)
                 .toList();
 
     }
+
+    public List<BookResponse> listAllFiltered(
+            Optional<String> title,
+            Optional<String> author,
+            Optional<String> category,
+            Optional<String> difficulty) {
+        return repo.findAll(byFilters(title,author,category, difficulty))
+                .stream()
+                .map(this::toBookResponse)
+                .toList();
+    }
+
 
 
     //---------------------------------------------------------------------------------------//
@@ -52,5 +70,6 @@ public class BookService {
                 .difficulty(book.getDifficulty().toString())
                 .build();
     }
+
 
 }
