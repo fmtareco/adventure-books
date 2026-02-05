@@ -10,9 +10,12 @@ import prs.fmtareco.adventure.loader.json.BookJson;
 import prs.fmtareco.adventure.loader.mapper.BookMapper;
 import prs.fmtareco.adventure.model.Book;
 import prs.fmtareco.adventure.repository.BookRepository;
+import tools.jackson.core.type.TypeReference;
 import tools.jackson.databind.ObjectMapper;
 
+
 import java.io.InputStream;
+import java.util.List;
 
 @Component
 public class BooksLoader {
@@ -37,29 +40,61 @@ public class BooksLoader {
     public void loadAllBooks() {
         try {
             Resource[] jsonFiles = new PathMatchingResourcePatternResolver()
-                    .getResources("classpath:books/*.json");
+                    .getResources("classpath:books/lists/*.json");
             for (Resource jsonFile : jsonFiles) {
-                loadBook(jsonFile);
-                System.out.println(jsonFile);
+                loadMultipleBooksResource(jsonFile);
+                System.out.println("loaded : " + jsonFile);
             }
         } catch (Exception e) {
-            log.error("Failed to scan book JSON files", e);
+            log.error("Failed to scan multiple books JSON files", e);
+        }
+        try {
+            Resource[] jsonFiles = new PathMatchingResourcePatternResolver()
+                    .getResources("classpath:books/*.json");
+            for (Resource jsonFile : jsonFiles) {
+                loadSingleBookResource(jsonFile);
+                System.out.println("loaded : " + jsonFile);
+            }
+        } catch (Exception e) {
+            log.error("Failed to scan single book JSON files", e);
         }
     }
 
 
-    private void loadBook(Resource jsonFile)  {
+    private void loadMultipleBooksResource(Resource jsonFile)  {
+        try (InputStream is = jsonFile.getInputStream()) {
+            if (is.available() == 0) {
+                log.error("Empty resource file : {}", jsonFile.getFilename());
+                return;
+            }
+            List<BookJson> booksList =
+                    objectMapper.readValue(is, new TypeReference<List<BookJson>>() {});
+            for(BookJson bj : booksList) {
+                loadBook(bj);
+            }
+        } catch (Exception e) {
+            log.error("Failed to load books from {}", jsonFile.getFilename(), e);
+        }
+    }
+    private void loadSingleBookResource(Resource jsonFile)  {
         try (InputStream is = jsonFile.getInputStream()) {
             if (is.available() == 0) {
                 log.error("Empty resource file : {}", jsonFile.getFilename());
                 return;
             }
             BookJson bookJson = objectMapper.readValue(is, BookJson.class);
-            String title = bookJson.title();
-            String author = bookJson.author();
+            loadBook(bookJson);
+        } catch (Exception e) {
+            log.error("Failed to load book from {}", jsonFile.getFilename(), e);
+        }
+    }
+    private void loadBook(BookJson bookJson)  {
+        String title = bookJson.title();
+        String author = bookJson.author();
+        try {
             if (bookRepository
-                .findByTitleIgnoreCaseAndAuthorIgnoreCase(title, author)
-                .isPresent()) {
+                    .findByTitleIgnoreCaseAndAuthorIgnoreCase(title, author)
+                    .isPresent()) {
                 log.info("Skipped book: {} by {}", title, author);
                 return;
             }
@@ -71,7 +106,7 @@ public class BooksLoader {
             }
             log.info("Loaded book: {} by {}", title, author);
         } catch (Exception e) {
-            log.error("Failed to load book from {}", jsonFile.getFilename(), e);
+            log.error("Failed to load book {} by {}", title, author, e);
         }
     }
 }

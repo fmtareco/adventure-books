@@ -1,0 +1,606 @@
+[
+  {
+    "title": "Jurassic Park",
+    "author": "Michael Crichton",
+    "difficulty": "MEDIUM",
+    "categories": [
+      "FICTION",
+      "HISTORIC",
+      "SCIENCE",
+      "HORROR",
+      "ADVENTURE",
+      "ROMANCE",
+      "THRILER",
+      "WAR",
+      "FANTASTIC"
+    ]
+  },
+  {
+  "title": "The Hobbit, or There and Back Again",
+  "author": "J.R.R. Tolkien",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "The Hunger Games",
+  "author": "Suzanne Collins",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "The Fellowship of the Ring",
+  "author": "J.R.R. Tolkien",
+  "difficulty": "EASY",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "The Da Vinci Code",
+  "author": "Dan Brown" ,
+  "difficulty": "EASY",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "The Girl With the Dragon Tattoo",
+  "author": "Stieg Larsson",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "The Bourne Identity",
+  "author": "Robert Ludlum",
+  "difficulty": "HARD",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "The Count of Monte Cristo",
+  "author": "Alexandre Dumas",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "The Hunt for Red October",
+  "author": "Tom Clancy",
+  "difficulty": "HARD",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "The Return of the King",
+  "author": "J.R.R. Tolkien",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "Divergent",
+  "author": "Veronica Roth",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "A Game of Thrones",
+  "author": "George R.R. Martin",
+  "difficulty": "EASY",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "Catching Fire",
+  "author": "Suzanne Collins",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "Murder on Family Grounds",
+  "author": "Susan Rowland",
+  "difficulty": "EASY",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "The Lord of the Rings",
+  "author": "J.R.R. Tolkien",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "The Three Musketeers",
+  "author": "Alexandre Dumas",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "Treasure Island",
+  "author": "Robert Louis Stevenson",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "Mockingjay",
+  "author": "Suzanne Collins",
+  "difficulty": "EASY",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "Patriot Games",
+  "author": "Tom Clancy",
+  "difficulty": "HARD",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "Harry Potter and the Sorcerer's Stone",
+  "author": "J.K. Rowling",
+  "difficulty": "EASY",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "And Then There Were None",
+  "author": "Agatha Christie",
+  "difficulty": "HARD",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "The Lost World",
+  "author": "Michael Crichton",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "Dune",
+  "author": "Frank Herbert",
+  "difficulty": "HARD",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "The Two Towers",
+  "author": "J.R.R. Tolkien",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "The Pillars of the Earth",
+  "author": "Ken Follett",
+  "difficulty": "HARD",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "Deception Point",
+  "author": "Dan Brown",
+  "difficulty": "EASY",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "The Sum of All Fears",
+  "author": "Tom Clancy",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "Ice Station",
+  "author": "Matthew Reilly",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "Twenty Years Later",
+  "author": "Charlie Donlea",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "Killing Floor",
+  "author": "Lee Child",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "The Girl Who Played with Fire",
+  "author": "Stieg Larsson",
+  "difficulty": "HARD",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "Congo",
+  "author": "Michael Crichton",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "Counter Identity",
+  "author": "Karl Braungart",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "Ready Player One",
+  "author": "Ernest Cline",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "The Maze Runner",
+  "author": "James Dashner",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "Deeper Than the Dead",
+  "author": "Debra Webb",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "Angels & Demons",
+  "author": "Dan Brown",
+  "difficulty": "EASY",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "On Her Watch",
+  "author": "Melinda Leigh",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "Harry Potter and the Deathly Hallows",
+  "author": "J.K. Rowling",
+  "difficulty": "EASY",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "Red Storm Rising",
+  "author": "Tom Clancy",
+  "difficulty": "HARD",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "Raise the Titanic!",
+  "author": "Clive Cussler",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "Sahara",
+  "author": "Clive Cussler",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "Passions in Death",
+  "author": "J.D. Robb",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "Jaws",
+  "author": "Peter Benchley",
+  "difficulty": "HARD",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "Journey's Paradox",
+  "author": "Mary Stone",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "The Reaping",
+  "author": "Jess Lourey",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "Executive Orders",
+  "author": "Tom Clancy",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "Echo Road",
+  "author": "Kendra Elliot",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "Dangerous Play",
+  "author": "Elise Hart Kipness",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "Listen for the Lie",
+  "author": "Amy Tintera",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "Odd Thomas",
+  "author": "Dean Koontz",
+  "difficulty": "HARD",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "The Swimmer",
+  "author": "Loreth Anne White",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "The Last Thing She Ever Did",
+  "author": "Gregg Olsen",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "The Somerset Slayings",
+  "author": "David J. Gatward",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "Amazonia",
+  "author": "James Rollins",
+  "difficulty": "EASY",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "White Eagle: Awakening",
+  "author": "Ellwood Cooper",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "Relic",
+  "author": "Douglas Preston",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "Harry Potter and the Prisoner of Azkaban",
+  "author": "J.K. Rowling",
+  "difficulty": "EASY",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "Harry Potter and the Chamber of Secrets",
+  "author": "J.K. Rowling",
+  "difficulty": "EASY",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "Shutter Island",
+  "author": "Dennis Lehane",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "Clear and Present Danger",
+  "author": "Tom Clancy",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "Harry Potter and the Goblet of Fire",
+  "author": "J.K. Rowling",
+  "difficulty": "EASY",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "The Wrong Daughter",
+  "author": "Dandy Smith",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "Those Empty Eyes",
+  "author": "Charlie Donlea",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "The Maid's Diary",
+  "author": "Loreth Anne White",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "Sandstorm",
+  "author": "James Rollins",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "What Lies in the Woods",
+  "author": "Kate Alice Marshall",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "Harry Potter and the Half-Blood Prince",
+  "author": "J.K. Rowling",
+  "difficulty": "EASY",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "Stripped Bare",
+  "author": "Shannon Baker",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "Hart's Ridge",
+  "author": "Kay Bratt",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "Map of Bones",
+  "author": "James Rollins",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "Harry Potter and the Order of the Phoenix",
+  "author": "J.K. Rowling",
+  "difficulty": "EASY",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "The Day of the Jackal",
+  "author": "Frederick Forsyth",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "Winter's Mourn",
+  "author": "Mary Stone",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "Pretty Girls",
+  "author": "Karin Slaughter",
+  "difficulty": "EASY",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "Never",
+  "author": "Ken Follett",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "Shadow's Siege",
+  "author": "Mary Stone",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "Iceberg",
+  "author": "Clive Cussler",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "Black Order",
+  "author": "James Rollins",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "Sidewinder",
+  "author": "L.T. Ryan",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "Lonesome Dove",
+  "author": "Larry McMurtry",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "The Patient's Secret",
+  "author": "Loreth Anne White",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "Inca Gold",
+  "author": "Clive Cussler",
+  "difficulty": "EASY",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "Seven Deadly Wonders",
+  "author": "Matthew Reilly",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "Her Name Is Knight",
+  "author": "Yasmin Angoe",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "The Doomsday Key",
+  "author": "James Rollins",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "Inferno",
+  "author": "Dan Brown",
+  "difficulty": "EASY",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "Blackbird",
+  "author": "Kay Bratt",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "The Last of the Mohicans",
+  "author": "James Fenimore Cooper",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "The Princess Bride",
+  "author": "William Goldman",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "Shōgun",
+  "author": "James Clavell",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "Riptide - Mörderische Flut",
+  "author": "Douglas Preston",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "World Without End",
+  "author": "Ken Follett",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "The Frozen River",
+  "author": "Ariel Lawhon",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "The Judas Strain",
+  "author": "James Rollins",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "The Alchemy Fire Murder",
+  "author": "Susan Rowland",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "Code Red",
+  "author": "Kyle Mills",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "Off the Grid",
+  "author": "C.J. Box",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  },
+  {
+  "title": "The Cardinal of the Kremlin",
+  "author": "Tom Clancy",
+  "difficulty": "MEDIUM",
+  "categories": ["FICTION", "HISTORIC", "SCIENCE", "HORROR", "ADVENTURE", "ROMANCE", "THRILER", "WAR", "FANTASTIC"]
+  }
+]

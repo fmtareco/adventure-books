@@ -37,8 +37,9 @@ public class BookService {
             Optional<String> title,
             Optional<String> author,
             Optional<String> category,
-            Optional<String> difficulty) {
-        return repo.findAll(byFilters(title,author,category, difficulty))
+            Optional<String> difficulty,
+            Pageable pageable) {
+        return repo.findAll(byFilters(title,author,category, difficulty), pageable)
                 .stream()
                 .map(this::toBookResponse)
                 .toList();
