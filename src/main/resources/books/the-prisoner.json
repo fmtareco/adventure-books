@@ -2,6 +2,7 @@
   "title": "The Prisoner",
   "author": "Daniel El Fuego",
   "difficulty": "HARD",
+  "categories": ["FICTION", "SCIENCE", "ADVENTURE"],
   "sections": [
     {
       "id": 1,

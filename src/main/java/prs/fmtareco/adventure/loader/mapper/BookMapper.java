@@ -6,13 +6,20 @@ import org.springframework.stereotype.Component;
 import prs.fmtareco.adventure.loader.json.BookJson;
 import prs.fmtareco.adventure.loader.json.SectionJson;
 import prs.fmtareco.adventure.model.Book;
+import prs.fmtareco.adventure.model.Category;
 import prs.fmtareco.adventure.model.Section;
+import prs.fmtareco.adventure.repository.BookRepository;
+import prs.fmtareco.adventure.repository.CategoryRepository;
+
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
 public class BookMapper {
 
     private final SectionMapper sectionMapper;
+    private final CategoryRepository  categoryRepo;
+
 
     public Book fromJson(BookJson json) {
         Book book = new Book();
@@ -20,13 +27,39 @@ public class BookMapper {
         book.setAuthor(json.author());
         book.setDifficulty(json.difficulty());
 
-        if (json.sections() != null) {
-            for (SectionJson sJson : json.sections()) {
-                Section section = sectionMapper.fromJson(sJson);
-                book.addSection(section);
-            }
-        }
+        fromJsonSections(book, json);
+        fromJsonCategories(book, json);
 
         return book;
     }
+
+    private void fromJsonCategories(Book book, BookJson json) {
+        if (json.categories() == null)
+            return;
+        for (String categoryName: json.categories()) {
+            try {
+                Category category = categoryRepo
+                        .findByNameIgnoreCase(categoryName)
+                        .orElseGet(() -> categoryRepo.save(new Category(categoryName)));
+                book.getCategories().add(category);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    private void fromJsonSections(Book book, BookJson json) {
+        if (json.sections() == null)
+            return;
+        for (SectionJson sJson : json.sections()) {
+            try {
+                Section section = sectionMapper.fromJson(sJson);
+                book.addSection(section);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
 }
+

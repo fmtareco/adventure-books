@@ -6,10 +6,7 @@ import lombok.Setter;
 import prs.fmtareco.adventure.exceptions.InvalidEnumValueException;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.EnumSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Entity
@@ -42,7 +39,7 @@ public class Book {
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
-    private Set<Category> categories;
+    private Set<Category> categories = new HashSet<>();
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

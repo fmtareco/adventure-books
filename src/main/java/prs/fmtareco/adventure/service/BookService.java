@@ -1,13 +1,13 @@
 package prs.fmtareco.adventure.service;
 
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 import prs.fmtareco.adventure.dtos.BookResponse;
 import prs.fmtareco.adventure.model.Book;
+import prs.fmtareco.adventure.model.Category;
 import prs.fmtareco.adventure.repository.BookRepository;
 
 import java.util.List;
-import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class BookService {
@@ -45,7 +45,11 @@ public class BookService {
                 .id(book.getId())
                 .author(book.getAuthor())
                 .title(book.getTitle())
-                .categories(book.getCategories())
+                .categories(
+                        book.getCategories().stream()
+                                .map(Category::getName)
+                                .collect(Collectors.toList()))
+                .difficulty(book.getDifficulty().toString())
                 .build();
     }
 

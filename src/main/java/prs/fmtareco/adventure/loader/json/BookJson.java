@@ -7,6 +7,7 @@ public record BookJson(
     String title,
     String author,
     Book.Difficulty difficulty,
+    List<String> categories,
     List<SectionJson> sections
 ){}
 

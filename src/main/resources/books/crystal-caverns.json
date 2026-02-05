@@ -2,6 +2,7 @@
   "title": "The Crystal Caverns",
   "author": "Evelyn Stormrider",
   "difficulty": "EASY",
+  "categories": ["FICTION", "HORROR", "ADVENTURE"],
   "sections": [
     {
       "id": 1,
