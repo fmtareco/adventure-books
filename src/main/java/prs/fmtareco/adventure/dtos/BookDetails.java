@@ -18,6 +18,6 @@ public record BookDetails(
     String author,
     String condition,
     String difficulty,
-    List<String> categories,
-    List<String> sections
+    List<String> categories
+//    List<String> sections
 ) implements Serializable {}

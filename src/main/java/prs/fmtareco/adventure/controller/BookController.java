@@ -40,26 +40,26 @@ public class BookController {
         return ResponseEntity.ok(service.getDetails(id));
     }
 
-    /**
-     * GET - /api/books{id}
-     * fetches a list of SectionSummary with the sections of identified book
-     * @param id - identifies the book
-     * @param page - determines the page from where the list starts
-     * @param size - determines the number of books returned
-     * @return List of SectionSummary
-     */
-    @GetMapping("/{id}/sections")
-    public ResponseEntity<List<SectionSummary>> getBookSections(
-            @PathVariable Long id,
-            @RequestParam(value = "page", defaultValue = "0" ) int page,
-            @RequestParam(value = "size", defaultValue = "10" ) int size,
-            @RequestParam  (defaultValue = "true") boolean ascending) {
-        Sort sort = getSectionsSort(ascending);
-        Pageable pageable = PageRequest.of(page, size, sort);
-        return ResponseEntity.ok(
-                service.listAllSections(id, pageable)
-        );
-    }
+//    /**
+//     * GET - /api/books{id}
+//     * fetches a list of SectionSummary with the sections of identified book
+//     * @param id - identifies the book
+//     * @param page - determines the page from where the list starts
+//     * @param size - determines the number of books returned
+//     * @return List of SectionSummary
+//     */
+//    @GetMapping("/{id}/sections")
+//    public ResponseEntity<List<SectionSummary>> getBookSections(
+//            @PathVariable Long id,
+//            @RequestParam(value = "page", defaultValue = "0" ) int page,
+//            @RequestParam(value = "size", defaultValue = "10" ) int size,
+//            @RequestParam  (defaultValue = "true") boolean ascending) {
+//        Sort sort = getSectionsSort(ascending);
+//        Pageable pageable = PageRequest.of(page, size, sort);
+//        return ResponseEntity.ok(
+//                service.listAllSections(id, pageable)
+//        );
+//    }
 
     /**
      * POST /api/books/{id}/categories/{name} -
