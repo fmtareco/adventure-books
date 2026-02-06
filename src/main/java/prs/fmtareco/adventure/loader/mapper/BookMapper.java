@@ -8,10 +8,8 @@ import prs.fmtareco.adventure.loader.json.SectionJson;
 import prs.fmtareco.adventure.model.Book;
 import prs.fmtareco.adventure.model.Category;
 import prs.fmtareco.adventure.model.Section;
-import prs.fmtareco.adventure.repository.BookRepository;
 import prs.fmtareco.adventure.repository.CategoryRepository;
 
-import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -28,8 +26,7 @@ public class BookMapper {
         book.setDifficulty(json.difficulty());
         fromJsonSections(book, json);
         fromJsonCategories(book, json);
-        
-        book.setBookValid(book.isValid());
+        book.setBookCondition();
 
         return book;
     }

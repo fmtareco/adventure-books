@@ -32,13 +32,22 @@ public interface BookRepository extends JpaRepository<Book, Long>, JpaSpecificat
                 Optional<String> author,
                 Optional<String> category,
                 Optional<String> difficulty,
-                boolean onlyValid) {
+                Optional<String> condition) {
         return (root, query, builder) -> {
             List<Predicate> predicates = new ArrayList<>();
 
-            if (onlyValid) {
-                predicates.add(builder.isTrue(root.get("bookValid")));
-            }
+            condition.filter(c -> !c.isBlank())
+                    .map(String::toUpperCase)
+                    .flatMap(c -> {
+                        try {
+                            return Optional.of(Book.Condition.from(c));
+                        } catch (InvalidEnumValueException ex) {
+                            return Optional.empty();
+                        }
+                    })
+                    .ifPresent(c ->
+                            predicates.add(builder.equal(root.get("condition"), c))
+                    );
 
             author.filter(a -> !a.isBlank())
                     .map(String::toLowerCase)

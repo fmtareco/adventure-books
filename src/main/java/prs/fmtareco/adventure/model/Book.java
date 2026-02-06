@@ -19,19 +19,29 @@ import java.util.stream.Collectors;
 @Setter
 public class Book {
 
+    /**
+     * book numeric key
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    /**
+     * exposes the book title
+     */
     @Column(nullable = false)
     private String title;
 
+    /**
+     * exposes the book author
+     */
     @Column(nullable = false)
     private String author;
 
-    @Column(name = "book_valid", nullable = false)
-    private boolean bookValid;
-
+    /**
+     * book sections :
+     *      aggregates the book sections
+     */
     @OneToMany(
             mappedBy = "book",
             cascade = CascadeType.ALL,
@@ -40,6 +50,20 @@ public class Book {
     )
     private List<Section> sections = new ArrayList<>();
 
+    /**
+     * adds a section to the book guaraneeing also that the section
+     * itself will be associated with the book
+     * @param section
+     */
+    public void addSection(Section section) {
+        getSections().add(section);
+        section.setBook(this);
+    }
+
+    /**
+     * book categories :
+     *      list of categories in which the book is classified
+     */
     @ManyToMany
     @JoinTable(
             name = "book_categories",
@@ -48,6 +72,10 @@ public class Book {
     )
     private Set<Category> categories = new HashSet<>();
 
+    /**
+     * book difficulty :
+     *      exposes the book difficulty level
+     */
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Difficulty difficulty;
@@ -68,41 +96,93 @@ public class Book {
         }
     }
 
-    public void addSection(Section section) {
-        getSections().add(section);
-        section.setBook(this);
+    /**
+     * book condition :
+     *      exposes the book valid status
+     */
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Condition condition;
+
+    public enum Condition implements Serializable {
+        OK,
+        INVALID_BEGIN,
+        NO_END,
+        INVALID_GOTO,
+        NO_OPTIONS;
+        public static Condition from(String condition) {
+            try {
+                return Condition.valueOf(condition);
+            } catch (IllegalArgumentException e) {
+                throw new InvalidEnumValueException("Condition", condition, valuesToString());
+            }
+        }
+        public static String valuesToString() {
+            return EnumSet.allOf(Condition.class).stream().map(Enum::toString).collect(Collectors.joining(","));
+        }
+    }
+
+    /**
+     * evaluates the book condition, aplying the valiations rules
+     * @return Condition
+     */
+    public Condition checkCondition() {
+        if (!hasOneOnlyBeginSection())
+            return Condition.INVALID_BEGIN;
+        if (!hasAtLeastOneEndSection())
+            return  Condition.NO_END;
+        if (hasInvalidGoToSection())
+            return Condition.INVALID_GOTO;
+        if (hasNonFinalSectionWithoutOptions())
+            return Condition.NO_OPTIONS;
+        return Condition.OK;
+    }
+
+    /**
+     * updates the book condition, based on condition evaluation
+     * @return Condition
+     */
+    public void setBookCondition() {
+        condition = checkCondition();
     }
 
 
-    //---------------------------------------------------------------------------------------//
-    //                              book validation rules                                    //
-    //---------------------------------------------------------------------------------------//
-
+    /**
+     * checks if Book has none, or more than one beginning
+     * @return
+     */
     public boolean hasOneOnlyBeginSection() {
          return getSections().stream()
                  .filter(s -> s.getType() == Section.Type.BEGIN).count() ==1;
     }
+
+    /**
+     * checks if Book has no ending (but can have multiple)
+     * @return
+     */
     public boolean hasAtLeastOneEndSection() {
         return getSections().stream()
                 .anyMatch(s -> s.getType() == Section.Type.END);
     }
+
+    /**
+     * checks if Book has invalid next section id
+     * @return
+     */
     public boolean hasInvalidGoToSection() {
         return getSections().stream()
             .flatMap(s -> s.getOptions().stream())
             .anyMatch(o -> getSections().stream().noneMatch(sec -> sec.getSectionNumber().equals(o.getGotoSectionNumber())));
     }
+
+    /**
+     * checks if Book has a non-ending section with no options
+     * @return
+     */
     public boolean hasNonFinalSectionWithoutOptions() {
         return getSections().stream()
                 .filter(s -> s.getType() != Section.Type.END)
                 .anyMatch(s -> s.getOptions().isEmpty());
     }
 
-    public boolean isValid() {
-        if (!hasOneOnlyBeginSection() ||
-            !hasAtLeastOneEndSection() ||
-            hasInvalidGoToSection() ||
-            hasNonFinalSectionWithoutOptions())
-            return false;
-        return true;
-    }
 }

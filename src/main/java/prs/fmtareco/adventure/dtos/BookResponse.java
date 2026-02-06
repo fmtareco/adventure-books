@@ -22,7 +22,7 @@ public record BookResponse(
     Long id,
     String title,
     String author,
-    boolean bookValid,
+    String condition,
     List<String> categories,
     String difficulty
 ) implements Serializable {}

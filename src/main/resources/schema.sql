@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS books (
     title VARCHAR(255) NOT NULL,
     author VARCHAR(255) NOT NULL,
     difficulty VARCHAR(20) NOT NULL, -- Easy, Medium and Hard
-    book_valid BOOLEAN NOT NULL DEFAULT FALSE,
+    condition VARCHAR(20) NOT NULL,
     CONSTRAINT uniq_books_title_author UNIQUE (title, author)
 );
 
@@ -91,4 +91,4 @@ CREATE TABLE IF NOT EXISTS players (
 CREATE INDEX IF NOT EXISTS idx_sections_book_id ON sections(book_id);
 CREATE INDEX IF NOT EXISTS idx_options_section_id ON options(section_id);
 CREATE INDEX IF NOT EXISTS idx_players_book_id ON players(book_id);
-CREATE INDEX IF NOT EXISTS idx_books_valid ON books(book_valid);
+CREATE INDEX IF NOT EXISTS idx_books_condition ON books(condition);
