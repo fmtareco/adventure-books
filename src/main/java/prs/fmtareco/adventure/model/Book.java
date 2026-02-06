@@ -69,12 +69,36 @@ public class Book {
     private Set<Category> categories = new HashSet<>();
 
     /**
+     * associates the book w/ a category
+     *
+     * @param category category to add
+     */
+    public void addCategory(Category category) {
+        if (category == null) {
+            return;
+        }
+        getCategories().add(category);
+    }
+    /**
+     * dissociates the book from a category
+     *
+     * @param category category to remove
+     */
+    public void removeCategory(Category category) {
+        if (category == null) {
+            return;
+        }
+        getCategories().remove(category);
+    }
+
+    /**
      * book difficulty :
      *      exposes the book difficulty level
      */
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Difficulty difficulty;
+
 
     public enum Difficulty implements Serializable {
         EASY,

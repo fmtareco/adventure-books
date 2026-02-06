@@ -6,9 +6,8 @@ import org.springframework.stereotype.Component;
 import prs.fmtareco.adventure.loader.json.BookJson;
 import prs.fmtareco.adventure.loader.json.SectionJson;
 import prs.fmtareco.adventure.model.Book;
-import prs.fmtareco.adventure.model.Category;
 import prs.fmtareco.adventure.model.Section;
-import prs.fmtareco.adventure.repository.CategoryRepository;
+import prs.fmtareco.adventure.service.BookService;
 
 
 @Component
@@ -16,7 +15,7 @@ import prs.fmtareco.adventure.repository.CategoryRepository;
 public class BookMapper {
 
     private final SectionMapper sectionMapper;
-    private final CategoryRepository  categoryRepo;
+    private final BookService bookService;
 
 
     public Book fromJson(BookJson json) {
@@ -36,10 +35,11 @@ public class BookMapper {
             return;
         for (String categoryName: json.categories()) {
             try {
-                Category category = categoryRepo
-                        .findByNameIgnoreCase(categoryName)
-                        .orElseGet(() -> categoryRepo.save(new Category(categoryName)));
-                book.getCategories().add(category);
+                bookService.addCategory(book, categoryName);
+//                Category category = categoryRepo
+//                        .findByNameIgnoreCase(categoryName)
+//                        .orElseGet(() -> categoryRepo.save(new Category(categoryName)));
+//                book.getCategories().add(category);
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }

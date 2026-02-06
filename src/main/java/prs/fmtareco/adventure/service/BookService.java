@@ -1,15 +1,18 @@
 package prs.fmtareco.adventure.service;
 
+import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import prs.fmtareco.adventure.dtos.BookDetails;
 import prs.fmtareco.adventure.dtos.BookSummary;
 import prs.fmtareco.adventure.dtos.SectionSummary;
 import prs.fmtareco.adventure.exceptions.BookNotFoundException;
+import prs.fmtareco.adventure.exceptions.CategoryNotFoundException;
 import prs.fmtareco.adventure.model.Book;
 import prs.fmtareco.adventure.model.Category;
 import prs.fmtareco.adventure.model.Section;
 import prs.fmtareco.adventure.repository.BookRepository;
+import prs.fmtareco.adventure.repository.CategoryRepository;
 import prs.fmtareco.adventure.repository.SectionRepository;
 
 import java.util.List;
@@ -24,11 +27,17 @@ public class BookService {
 
     private final BookRepository bookRepo;
     private final SectionRepository sectionRepo;
+    private final CategoryRepository categoryRepo;
     private final SectionService sectionService;
 
-    public BookService(BookRepository bookRepo, SectionRepository  sectionRepo, SectionService  sectionService) {
+    public BookService(
+            BookRepository bookRepo,
+            SectionRepository  sectionRepo,
+            CategoryRepository  categoryRepo,
+            SectionService  sectionService) {
         this.bookRepo = bookRepo;
         this.sectionRepo = sectionRepo;
+        this.categoryRepo = categoryRepo;
         this.sectionService = sectionService;
     }
 
@@ -83,7 +92,52 @@ public class BookService {
                 .toList();
     }
 
+    @Transactional
+    public void addCategory(Long id, String categoryName) {
+        Book book = bookRepo.findById(id).orElseThrow(() -> new BookNotFoundException(id));
+        addCategory(book, categoryName);
+    }
 
+    @Transactional
+    public void addCategories(Long id, List<String> categories) {
+        Book book = bookRepo.findById(id).orElseThrow(() -> new BookNotFoundException(id));
+        for(String categoryName : categories) {
+            addCategory(book, categoryName);
+        }
+    }
+
+
+    public void addCategory(Book book, String categoryName) {
+        Category category = categoryRepo
+                .findByNameIgnoreCase(categoryName)
+                .orElseGet(() -> categoryRepo.save(new Category(categoryName)));
+        book.addCategory(category);
+        bookRepo.save(book);
+    }
+
+    @Transactional
+    public void removeCategory(Long id, String categoryName) {
+        Book book = bookRepo.findById(id).orElseThrow(() -> new BookNotFoundException(id));
+        removeCategory(book, categoryName);
+    }
+
+    @Transactional
+    public void removeCategories(Long id, List<String> categories) {
+        Book book = bookRepo.findById(id).orElseThrow(() -> new BookNotFoundException(id));
+        for(String categoryName : categories) {
+            removeCategory(book, categoryName);
+        }
+    }
+
+
+
+    public void removeCategory(Book book, String categoryName) {
+        Category category = categoryRepo
+                .findByNameIgnoreCase(categoryName)
+                .orElseThrow(() -> new CategoryNotFoundException(categoryName));
+        book.removeCategory(category);
+        bookRepo.save(book);
+    }
 
 
     /**

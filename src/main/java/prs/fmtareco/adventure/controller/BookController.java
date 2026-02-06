@@ -3,10 +3,12 @@ package prs.fmtareco.adventure.controller;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import prs.fmtareco.adventure.dtos.BookDetails;
 import prs.fmtareco.adventure.dtos.BookSummary;
+import prs.fmtareco.adventure.dtos.CategoriesRequest;
 import prs.fmtareco.adventure.dtos.SectionSummary;
 import prs.fmtareco.adventure.service.BookService;
 
@@ -59,7 +61,54 @@ public class BookController {
         );
     }
 
+    /**
+     * POST /api/books/{id}/categories/{name} -
+     * associates the book association w/ a new category
+     * Idempotent
+     * @param id - identifies the book
+     * @param categoryName - identifies the category
+     */
+    @PostMapping("/{id}/categories/{categoryName}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void addCategory(@PathVariable Long id, @PathVariable String categoryName) {
+        service.addCategory(id, categoryName);
+    }
 
+    /**
+     * POST /api/books/{id}/categories
+     * associates the book association w/ a list of categories
+     * @param id - identifies the book
+     * @param request - identifies the category list
+     */
+    @PostMapping("/{id}/categories")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void addCategoriesList(@PathVariable Long id, @RequestBody CategoriesRequest request) {
+        service.addCategories(id, request.categories());
+    }
+
+    /**
+     * DELETE /api/books/{id}/categories/{name} -
+     * eliminates the book association w/ particular category
+     * @param id - identifies the book
+     * @param categoryName - identifies the category the removes
+     */
+    @DeleteMapping("/{id}/categories/{categoryName}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void removeCategory(@PathVariable Long id, @PathVariable String categoryName) {
+        service.removeCategory(id, categoryName);
+    }
+
+    /**
+     * DELETE /api/books/{id}/categories
+     * eliminates the book association w/ a list of categories
+     * @param id - identifies the book
+     * @param request - identifies the category list
+     */
+    @DeleteMapping("/{id}/categories")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void removeCategories(@PathVariable Long id,@RequestBody CategoriesRequest request) {
+        service.removeCategories(id, request.categories());
+    }
 
     /**
      * GET  - /api/books
@@ -82,7 +131,7 @@ public class BookController {
             @RequestParam(required = false) String author,
             @RequestParam(required = false) String category,
             @RequestParam(required = false) String difficulty,
-            @RequestParam(required = false, defaultValue = "OK") String condition,
+            @RequestParam(required = false, defaultValue = "") String condition,
             @RequestParam(value = "page", defaultValue = "0" ) int page,
             @RequestParam(value = "size", defaultValue = "3" ) int size,
             @RequestParam  (defaultValue = "true") boolean ascending
