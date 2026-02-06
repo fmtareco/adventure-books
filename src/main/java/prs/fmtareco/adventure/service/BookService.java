@@ -92,51 +92,82 @@ public class BookService {
                 .toList();
     }
 
+    /**
+     * associates a category w/ the book w/ key id
+     * @param id book key
+     * @param categoryName category to associate
+     */
     @Transactional
     public void addCategory(Long id, String categoryName) {
         Book book = bookRepo.findById(id).orElseThrow(() -> new BookNotFoundException(id));
         addCategory(book, categoryName);
+        bookRepo.save(book);
     }
 
+    /**
+     * associates a list of categories w/ the book w/ key id
+     * @param id book key
+     * @param categories list of categories to associate
+     */
     @Transactional
     public void addCategories(Long id, List<String> categories) {
         Book book = bookRepo.findById(id).orElseThrow(() -> new BookNotFoundException(id));
         for(String categoryName : categories) {
             addCategory(book, categoryName);
         }
+        bookRepo.save(book);
     }
 
-
+    /**
+     * associates a category w/ the book
+     *
+     * @param book book
+     * @param categoryName category to associate
+     */
     public void addCategory(Book book, String categoryName) {
         Category category = categoryRepo
                 .findByNameIgnoreCase(categoryName)
                 .orElseGet(() -> categoryRepo.save(new Category(categoryName)));
         book.addCategory(category);
-        bookRepo.save(book);
     }
 
+    /**
+     * disssociates a category from the book w/ key id
+     * @param id book key
+     * @param categoryName category to associate
+     */
     @Transactional
     public void removeCategory(Long id, String categoryName) {
         Book book = bookRepo.findById(id).orElseThrow(() -> new BookNotFoundException(id));
         removeCategory(book, categoryName);
+        bookRepo.save(book);
     }
 
+    /**
+     * disssociates a list of categories from the book w/ key id
+     * @param id book key
+     * @param categories list of categories to associate
+     */
     @Transactional
     public void removeCategories(Long id, List<String> categories) {
         Book book = bookRepo.findById(id).orElseThrow(() -> new BookNotFoundException(id));
         for(String categoryName : categories) {
             removeCategory(book, categoryName);
         }
+        bookRepo.save(book);
     }
 
-
-
+    /**
+     * dissociates a category from the book
+     *
+     * @param book book
+     * @param categoryName category to associate
+     */
     public void removeCategory(Book book, String categoryName) {
         Category category = categoryRepo
                 .findByNameIgnoreCase(categoryName)
                 .orElseThrow(() -> new CategoryNotFoundException(categoryName));
         book.removeCategory(category);
-        bookRepo.save(book);
     }
 
 
