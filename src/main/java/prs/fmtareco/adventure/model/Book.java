@@ -1,12 +1,8 @@
 package prs.fmtareco.adventure.model;
 
 import jakarta.persistence.*;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.Hibernate;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
 import prs.fmtareco.adventure.exceptions.InvalidEnumValueException;
 
 import java.io.Serializable;
@@ -53,7 +49,7 @@ public class Book {
     /**
      * adds a section to the book guaraneeing also that the section
      * itself will be associated with the book
-     * @param section
+     * @param section : the section to be associated
      */
     public void addSection(Section section) {
         getSections().add(section);
@@ -140,7 +136,6 @@ public class Book {
 
     /**
      * updates the book condition, based on condition evaluation
-     * @return Condition
      */
     public void setBookCondition() {
         condition = checkCondition();
@@ -149,7 +144,7 @@ public class Book {
 
     /**
      * checks if Book has none, or more than one beginning
-     * @return
+     * @return true, if it is OK
      */
     public boolean hasOneOnlyBeginSection() {
          return getSections().stream()
@@ -158,7 +153,7 @@ public class Book {
 
     /**
      * checks if Book has no ending (but can have multiple)
-     * @return
+     * @return true, if it is OK
      */
     public boolean hasAtLeastOneEndSection() {
         return getSections().stream()
@@ -167,7 +162,7 @@ public class Book {
 
     /**
      * checks if Book has invalid next section id
-     * @return
+     * @return true, if it is NOT OK
      */
     public boolean hasInvalidGoToSection() {
         return getSections().stream()
@@ -177,7 +172,7 @@ public class Book {
 
     /**
      * checks if Book has a non-ending section with no options
-     * @return
+     * @return true, if it is NOT OK
      */
     public boolean hasNonFinalSectionWithoutOptions() {
         return getSections().stream()

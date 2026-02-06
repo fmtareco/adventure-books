@@ -13,19 +13,10 @@ import prs.fmtareco.adventure.model.Category;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 public interface BookRepository extends JpaRepository<Book, Long>, JpaSpecificationExecutor<Book> {
 
     Optional<Book> findByTitleIgnoreCaseAndAuthorIgnoreCase(String title, String author);
-
-    List<Book> findByTitleContainingIgnoreCase(String title);
-
-    List<Book> findByAuthorContainingIgnoreCase(String author);
-
-    List<Book> findByDifficulty(String difficulty);
-
-    List<Book> findDistinctByCategories_NameIn(Set<String> names);
 
     static Specification<Book> byFilters(
                 Optional<String> title,
