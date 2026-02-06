@@ -28,17 +28,14 @@ public class BookService {
     private final BookRepository bookRepo;
     private final SectionRepository sectionRepo;
     private final CategoryRepository categoryRepo;
-    private final SectionService sectionService;
 
     public BookService(
             BookRepository bookRepo,
             SectionRepository  sectionRepo,
-            CategoryRepository  categoryRepo,
-            SectionService  sectionService) {
+            CategoryRepository  categoryRepo) {
         this.bookRepo = bookRepo;
         this.sectionRepo = sectionRepo;
         this.categoryRepo = categoryRepo;
-        this.sectionService = sectionService;
     }
 
     /**
@@ -88,7 +85,7 @@ public class BookService {
     public List<SectionSummary> listAllSections(Long id, Pageable pageable) {
         return sectionRepo.findByBookId(id, pageable)
                 .stream()
-                .map(sectionService::toSectionSummary)
+                .map(this::toSectionSummary)
                 .toList();
     }
 
@@ -208,11 +205,24 @@ public class BookService {
                                 .map(Category::getName)
                                 .collect(Collectors.toList()))
                 .difficulty(book.getDifficulty().toString())
-                .sections(
-                        book.getSections().stream()
-                                .map(Section::getText)
-                                .collect(Collectors.toList()))
+//                .sections(
+//                        book.getSections().stream()
+//                                .map(Section::getText)
+//                                .collect(Collectors.toList()))
                 .build();
     }
 
+    /**
+     * to convert the selected Section to a
+     * SectionSummary DTO to return on the book details
+     * @param section - the section to be converted
+     * @return SectionSummary
+     */
+    public SectionSummary toSectionSummary(Section section) {
+        return SectionSummary.builder()
+                .id(section.getId())
+                .sectionNumber(section.getSectionNumber())
+                .text(section.getText())
+                .build();
+    }
 }

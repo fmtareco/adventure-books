@@ -27,8 +27,6 @@ public class BookController {
     }
 
 
-
-
     /**
      * GET - /api/books{id}
      * fetches a single book details

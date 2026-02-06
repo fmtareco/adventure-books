@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import prs.fmtareco.adventure.exceptions.InvalidEnumValueException;
+import prs.fmtareco.adventure.exceptions.InvalidSectionException;
 
 import java.io.Serializable;
 import java.util.*;
@@ -54,6 +55,22 @@ public class Book {
     public void addSection(Section section) {
         getSections().add(section);
         section.setBook(this);
+    }
+
+    /**
+     * fetches the initial section of the book
+     * @return begin section (optional)
+     */
+    public Optional<Section> getInitialSection() {
+        return getSections().stream()
+                .filter(s -> s.getType() == Section.Type.BEGIN)
+                .findFirst();
+    }
+
+    public Optional<Section> getSectionNumber(int sectionNumber) {
+        return getSections().stream()
+                .filter(s -> s.getSectionNumber() == sectionNumber)
+                .findFirst();
     }
 
     /**
