@@ -4,15 +4,11 @@ package prs.fmtareco.adventure.exceptions;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.time.Instant;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -21,7 +17,7 @@ public class GlobalExceptionHandler {
     /**
      * handles all exceptions related with failed resource selection
      *
-     * @param ex throwed exception
+     * @param ex throw ed exception
      * @param request http request
      * @return Response w/ ErrorInfo
      */
@@ -35,20 +31,20 @@ public class GlobalExceptionHandler {
     /**
      * handles all exceptions related with failed resource selection
      *
-     * @param ex throwed exception
+     * @param ex thrown exception
      * @param request http request
      * @return Response w/ ErrorInfo
      */
-    @ExceptionHandler(InvalidEnumValueException.class)
-    public ResponseEntity<ErrorInfo> handleInvalidEnumValue(
-            InvalidEnumValueException ex,
+    @ExceptionHandler(InvalidResourceException.class)
+    public ResponseEntity<ErrorInfo> handleInvalidResource(
+            InvalidResourceException ex,
             HttpServletRequest request) {
         return getErrorResponse(ex, request, HttpStatus.NOT_ACCEPTABLE, null);
     }
 
     /**
      * formats an error response
-     * @param ex throwed exception
+     * @param ex thrown exception
      * @param request http request
      * @param status http status code
      * @return Response w/ ErrorInfo
@@ -64,7 +60,7 @@ public class GlobalExceptionHandler {
 
     /**
      * return a record with the error relevant information
-     * @param ex throwed exception
+     * @param ex thrown exception
      * @param request http request
      * @param status http status code
      * @return error info structure
