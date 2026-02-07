@@ -1,8 +1,7 @@
 package prs.fmtareco.adventure.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import prs.fmtareco.adventure.exceptions.InvalidEnumValueException;
 import prs.fmtareco.adventure.exceptions.InvalidSectionException;
 
@@ -14,6 +13,9 @@ import java.util.stream.Collectors;
 @Table(name = "books")
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Book {
 
     /**
@@ -45,6 +47,7 @@ public class Book {
             fetch = FetchType.LAZY,
             orphanRemoval = true
     )
+    @Builder.Default
     private List<Section> sections = new ArrayList<>();
 
     /**
@@ -83,6 +86,7 @@ public class Book {
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
+    @Builder.Default
     private Set<Category> categories = new HashSet<>();
 
     /**

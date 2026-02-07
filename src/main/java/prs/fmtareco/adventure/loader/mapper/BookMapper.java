@@ -3,6 +3,7 @@ package prs.fmtareco.adventure.loader.mapper;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import prs.fmtareco.adventure.factory.BookFactory;
 import prs.fmtareco.adventure.loader.json.BookJson;
 import prs.fmtareco.adventure.loader.json.SectionJson;
 import prs.fmtareco.adventure.model.Book;
@@ -16,17 +17,18 @@ public class BookMapper {
 
     private final SectionMapper sectionMapper;
     private final BookService bookService;
+    private final BookFactory bookFactory;
 
 
     public Book fromJson(BookJson json) {
-        Book book = new Book();
-        book.setTitle(json.title());
-        book.setAuthor(json.author());
-        book.setDifficulty(json.difficulty());
+        Book book = Book.builder()
+            .title(json.title())
+            .author(json.author())
+            .difficulty(json.difficulty())
+            .build();
         fromJsonSections(book, json);
         fromJsonCategories(book, json);
         book.setBookCondition();
-
         return book;
     }
 
@@ -35,11 +37,7 @@ public class BookMapper {
             return;
         for (String categoryName: json.categories()) {
             try {
-                bookService.addCategory(book, categoryName);
-//                Category category = categoryRepo
-//                        .findByNameIgnoreCase(categoryName)
-//                        .orElseGet(() -> categoryRepo.save(new Category(categoryName)));
-//                book.getCategories().add(category);
+                bookFactory.addCategoryToBook(book, categoryName);
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }

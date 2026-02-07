@@ -1,8 +1,7 @@
 package prs.fmtareco.adventure.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import prs.fmtareco.adventure.exceptions.InvalidEnumValueException;
 
 import java.io.Serializable;
@@ -20,6 +19,9 @@ import java.util.stream.Collectors;
 )
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Section {
 
     @Id
@@ -37,6 +39,7 @@ public class Section {
     @Basic(fetch = FetchType.LAZY)
     private String text;
 
+    @Builder.Default
     @OneToMany(mappedBy = "section", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Option> options = new ArrayList<>();
 

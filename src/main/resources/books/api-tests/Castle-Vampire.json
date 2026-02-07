@@ -1,0 +1,38 @@
+{
+  "title": "Castle of the Last Vampire",
+  "author": "Victor Dusk",
+  "difficulty": "HARD",
+  "categories": ["HORROR", "FICTION"],
+  "sections": [
+    {
+      "id": 1,
+      "text": "You enter a silent gothic castle at midnight.",
+      "type": "BEGIN",
+      "options": [
+        { "description": "Climb the tower", "gotoId": 20 },
+        { "description": "Explore the dungeon", "gotoId": 50 }
+      ]
+    },
+    {
+      "id": 20,
+      "text": "A vampire confronts you.",
+      "type": "NODE",
+      "options": [
+        {
+          "description": "Fight bravely",
+          "gotoId": 70,
+          "consequence": { "type": "LOSE_HEALTH", "value": "7", "text": "Fangs pierce your neck." }
+        },
+        { "description": "Jump from the tower", "gotoId": 90 }
+      ]
+    },
+    {
+      "id": 50,
+      "text": "You find holy relics in the dungeon.",
+      "type": "NODE",
+      "options": [{ "description": "Take them upstairs", "gotoId": 20 }]
+    },
+    { "id": 70, "text": "With relics, you defeat the vampire.", "type": "END" },
+    { "id": 90, "text": "The fall ends your journey.", "type": "END" }
+  ]
+}

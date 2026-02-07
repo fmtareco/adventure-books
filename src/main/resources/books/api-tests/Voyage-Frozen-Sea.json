@@ -1,0 +1,33 @@
+{
+  "title": "Voyage Beneath the Frozen Sea",
+  "author": "Elia Frost",
+  "difficulty": "EASY",
+  "categories": ["SCIENCE", "ADVENTURE"],
+  "sections": [
+    {
+      "id": 1,
+      "text": "Your submarine descends under ancient ice.",
+      "type": "BEGIN",
+      "options": [
+        { "description": "Follow a sonar signal", "gotoId": 10 },
+        { "description": "Surface immediately", "gotoId": 80 }
+      ]
+    },
+    {
+      "id": 10,
+      "text": "A giant creature circles the vessel.",
+      "type": "NODE",
+      "options": [
+        {
+          "description": "Stay silent",
+          "gotoId": 30,
+          "consequence": { "type": "LOSE_HEALTH", "value": "2", "text": "Pressure cracks the hull slightly." }
+        },
+        { "description": "Shine the lights", "gotoId": 50 }
+      ]
+    },
+    { "id": 30, "text": "You discover a hidden underwater city.", "type": "END" },
+    { "id": 50, "text": "The creature attacks and destroys the submarine.", "type": "END" },
+    { "id": 80, "text": "You safely abandon the mission.", "type": "END" }
+  ]
+}

@@ -1,0 +1,41 @@
+  {
+    "title": "Desert of Forgotten Kings",
+    "author": "Aron Sol",
+    "difficulty": "MEDIUM",
+    "categories": ["ADVENTURE", "HISTORIC"],
+    "sections": [
+      {
+        "id": 1,
+        "text": "You stand before ancient desert ruins.",
+        "type": "BEGIN",
+        "options": [
+          { "description": "Enter the ruins", "gotoId": 50 },
+          { "description": "Search the dunes", "gotoId": 20 }
+        ]
+      },
+      {
+        "id": 20,
+        "text": "A sandstorm rises suddenly.",
+        "type": "NODE",
+        "options": [
+          {
+            "description": "Endure the storm",
+            "gotoId": 70,
+            "consequence": { "type": "LOSE_HEALTH", "value": "5", "text": "Sand burns your skin." }
+          },
+          { "description": "Hide behind rocks", "gotoId": 50 }
+        ]
+      },
+      {
+        "id": 50,
+        "text": "Inside the ruins, a golden tomb awaits.",
+        "type": "NODE",
+        "options": [
+          { "description": "Open the tomb", "gotoId": 90 },
+          { "description": "Leave quietly", "gotoId": 70 }
+        ]
+      },
+      { "id": 70, "text": "You escape the desert alive.", "type": "END" },
+      { "id": 90, "text": "Treasure and glory are yours.", "type": "END" }
+    ]
+  }

@@ -1,12 +1,16 @@
 package prs.fmtareco.adventure.service;
 
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import prs.fmtareco.adventure.dtos.BookDetails;
+import prs.fmtareco.adventure.dtos.BookRequest;
 import prs.fmtareco.adventure.dtos.BookSummary;
 import prs.fmtareco.adventure.exceptions.BookNotFoundException;
 import prs.fmtareco.adventure.exceptions.CategoryNotFoundException;
+import prs.fmtareco.adventure.exceptions.DuplicateBookException;
+import prs.fmtareco.adventure.factory.BookFactory;
 import prs.fmtareco.adventure.model.Book;
 import prs.fmtareco.adventure.model.Category;
 import prs.fmtareco.adventure.repository.BookRepository;
@@ -23,13 +27,30 @@ public class BookService {
 
 
     private final BookRepository bookRepo;
-    private final CategoryRepository categoryRepo;
+    private final BookFactory factory;
 
     public BookService(
             BookRepository bookRepo,
-            CategoryRepository  categoryRepo) {
+            BookFactory factory) {
         this.bookRepo = bookRepo;
-        this.categoryRepo = categoryRepo;
+        this.factory = factory;
+    }
+
+
+    @Transactional
+    public BookDetails createBook(BookRequest request) {
+
+        if (bookRepo.existsByTitleIgnoreCaseAndAuthorIgnoreCase(
+                request.title(), request.author())) {
+            throw new DuplicateBookException(request.title(), request.author());
+        }
+
+        Book book = factory.fromRequest(request);
+
+
+        bookRepo.save(book);
+
+        return toBookDetails(book);
     }
 
     /**
@@ -77,7 +98,7 @@ public class BookService {
     @Transactional
     public void addCategory(Long id, String categoryName) {
         Book book = bookRepo.findById(id).orElseThrow(() -> new BookNotFoundException(id));
-        addCategory(book, categoryName);
+        factory.addCategoryToBook(book, categoryName);
         bookRepo.save(book);
     }
 
@@ -90,23 +111,12 @@ public class BookService {
     public void addCategories(Long id, List<String> categories) {
         Book book = bookRepo.findById(id).orElseThrow(() -> new BookNotFoundException(id));
         for(String categoryName : categories) {
-            addCategory(book, categoryName);
+            factory.addCategoryToBook(book, categoryName);
         }
         bookRepo.save(book);
     }
 
-    /**
-     * associates a category w/ the book
-     *
-     * @param book book
-     * @param categoryName category to associate
-     */
-    public void addCategory(Book book, String categoryName) {
-        Category category = categoryRepo
-                .findByNameIgnoreCase(categoryName)
-                .orElseGet(() -> categoryRepo.save(new Category(categoryName)));
-        book.addCategory(category);
-    }
+
 
     /**
      * disassociates a category from the book w/ key id
@@ -116,7 +126,7 @@ public class BookService {
     @Transactional
     public void removeCategory(Long id, String categoryName) {
         Book book = bookRepo.findById(id).orElseThrow(() -> new BookNotFoundException(id));
-        removeCategory(book, categoryName);
+        factory.removeCategoryFromBook(book, categoryName);
         bookRepo.save(book);
     }
 
@@ -129,23 +139,12 @@ public class BookService {
     public void removeCategories(Long id, List<String> categories) {
         Book book = bookRepo.findById(id).orElseThrow(() -> new BookNotFoundException(id));
         for(String categoryName : categories) {
-            removeCategory(book, categoryName);
+            factory.removeCategoryFromBook(book, categoryName);
         }
         bookRepo.save(book);
     }
 
-    /**
-     * dissociates a category from the book
-     *
-     * @param book book
-     * @param categoryName category to associate
-     */
-    public void removeCategory(Book book, String categoryName) {
-        Category category = categoryRepo
-                .findByNameIgnoreCase(categoryName)
-                .orElseThrow(() -> new CategoryNotFoundException(categoryName));
-        book.removeCategory(category);
-    }
+
 
 
     /**
@@ -187,4 +186,5 @@ public class BookService {
                 .difficulty(book.getDifficulty().toString())
                 .build();
     }
+
 }

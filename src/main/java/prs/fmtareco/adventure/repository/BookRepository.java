@@ -78,4 +78,6 @@ public interface BookRepository extends JpaRepository<Book, Long>, JpaSpecificat
             return builder.and(predicates.toArray(new Predicate[predicates.size()]));
         };
     }
+
+    boolean existsByTitleIgnoreCaseAndAuthorIgnoreCase(String title, String author);
 }

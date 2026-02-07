@@ -1,0 +1,33 @@
+  {
+    "title": "Skyship Over the Abyss",
+    "author": "Mira Storm",
+    "difficulty": "MEDIUM",
+    "categories": ["SCIENCE", "ADVENTURE"],
+    "sections": [
+      {
+        "id": 1,
+        "text": "You board a fragile skyship above an endless abyss.",
+        "type": "BEGIN",
+        "options": [
+          { "description": "Check the engine", "gotoId": 10 },
+          { "description": "Look over the edge", "gotoId": 20 }
+        ]
+      },
+      {
+        "id": 10,
+        "text": "The engine is unstable.",
+        "type": "NODE",
+        "options": [
+          {
+            "description": "Repair it quickly",
+            "gotoId": 40,
+            "consequence": { "type": "LOSE_HEALTH", "value": "2", "text": "Steam burns your hand." }
+          },
+          { "description": "Do nothing", "gotoId": 30 }
+        ]
+      },
+      { "id": 20, "text": "You slip and fall into the abyss.", "type": "END" },
+      { "id": 30, "text": "The ship explodes mid-air.", "type": "END" },
+      { "id": 40, "text": "The skyship stabilizes and reaches safety.", "type": "END" }
+    ]
+  }

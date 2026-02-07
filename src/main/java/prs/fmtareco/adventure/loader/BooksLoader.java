@@ -22,7 +22,7 @@ public class BooksLoader {
 
     private static final Logger log = LoggerFactory.getLogger(BooksLoader.class);
 
-    private final BookRepository bookRepository;
+    private final BookRepository bookRepo;
     private final ObjectMapper objectMapper;
     private final BookMapper bookMapper;
 
@@ -31,7 +31,7 @@ public class BooksLoader {
             BookMapper bookMapper,
             ObjectMapper objectMapper
     ) {
-        this.bookRepository = bookRepository;
+        this.bookRepo = bookRepository;
         this.objectMapper = objectMapper;
         this.bookMapper = bookMapper;
     }
@@ -92,15 +92,13 @@ public class BooksLoader {
         String title = bookJson.title();
         String author = bookJson.author();
         try {
-            if (bookRepository
-                    .findByTitleIgnoreCaseAndAuthorIgnoreCase(title, author)
-                    .isPresent()) {
+            if (bookRepo.existsByTitleIgnoreCaseAndAuthorIgnoreCase(title, author)) {
                 log.info("Skipped book: {} by {}", title, author);
                 return;
             }
             Book book = bookMapper.fromJson(bookJson);
             try {
-                bookRepository.save(book);
+                bookRepo.save(book);
             } catch (Exception e) {
                 log.error("Failed to save book: {} by {}", title, author, e);
             }

@@ -1,5 +1,6 @@
 package prs.fmtareco.adventure.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -7,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import prs.fmtareco.adventure.dtos.BookDetails;
+import prs.fmtareco.adventure.dtos.BookRequest;
 import prs.fmtareco.adventure.dtos.BookSummary;
 import prs.fmtareco.adventure.dtos.CategoriesRequest;
 import prs.fmtareco.adventure.service.BookService;
@@ -19,11 +21,23 @@ import java.util.Optional;
 @RequestMapping("/api/books")
 public class BookController {
 
-    private final BookService service;
+    private final BookService bookService;
 
     public BookController(BookService svc) {
-        this.service = svc;
+        this.bookService = svc;
     }
+
+    /**
+     * creates a new book based on the info on the request
+     * @param req BookRequest structure correspondent to the json files
+     * @return BooKDetails DTO with info of the new Book
+     */
+    @PostMapping
+    public ResponseEntity<BookDetails> createBook(@Valid @RequestBody BookRequest req) {
+        BookDetails newBook = bookService.createBook(req);
+        return new ResponseEntity<>(newBook, HttpStatus.CREATED);
+    }
+
 
     /**
      * GET - /api/books{id}
@@ -33,7 +47,7 @@ public class BookController {
      */
     @GetMapping("/{id}")
     public ResponseEntity<BookDetails> getBookDetails(@PathVariable Long id) {
-        return ResponseEntity.ok(service.getDetails(id));
+        return ResponseEntity.ok(bookService.getDetails(id));
     }
 
     /**
@@ -46,7 +60,7 @@ public class BookController {
     @PostMapping("/{id}/categories/{categoryName}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void addCategory(@PathVariable Long id, @PathVariable String categoryName) {
-        service.addCategory(id, categoryName);
+        bookService.addCategory(id, categoryName);
     }
 
     /**
@@ -58,7 +72,7 @@ public class BookController {
     @PostMapping("/{id}/categories")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void addCategoriesList(@PathVariable Long id, @RequestBody CategoriesRequest request) {
-        service.addCategories(id, request.categories());
+        bookService.addCategories(id, request.categories());
     }
 
     /**
@@ -70,7 +84,7 @@ public class BookController {
     @DeleteMapping("/{id}/categories/{categoryName}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void removeCategory(@PathVariable Long id, @PathVariable String categoryName) {
-        service.removeCategory(id, categoryName);
+        bookService.removeCategory(id, categoryName);
     }
 
     /**
@@ -82,7 +96,7 @@ public class BookController {
     @DeleteMapping("/{id}/categories")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void removeCategories(@PathVariable Long id,@RequestBody CategoriesRequest request) {
-        service.removeCategories(id, request.categories());
+        bookService.removeCategories(id, request.categories());
     }
 
     /**
@@ -113,16 +127,16 @@ public class BookController {
             @RequestParam  (defaultValue = "true") boolean ascending
     ) {
         Sort sort = getBooksSort(ascending,
-                Optional.of(title),
-                Optional.of(author));
+                Optional.ofNullable(title),
+                Optional.ofNullable(author));
         Pageable pageable = PageRequest.of(page, size, sort);
         return ResponseEntity.ok(
-                service.listAllFiltered(
-                    Optional.of(title),
-                    Optional.of(author),
-                    Optional.of(category),
-                    Optional.of(difficulty),
-                    Optional.of(condition),
+                bookService.listAllFiltered(
+                    Optional.ofNullable(title),
+                    Optional.ofNullable(author),
+                    Optional.ofNullable(category),
+                    Optional.ofNullable(difficulty),
+                    Optional.ofNullable(condition),
                     pageable
                 )
         );
@@ -131,8 +145,8 @@ public class BookController {
     /**
      * return the Books Sort criteria
      * @param ascending - indicates the input sort direction
-     * @param title - the sort will based on book title
-     * @param author - when present, the sort will based on author name
+     * @param title - the sort will be based on book title
+     * @param author - when present, the sort will be based on author name
      * @return Sort criteria
      */
     protected Sort getBooksSort(
