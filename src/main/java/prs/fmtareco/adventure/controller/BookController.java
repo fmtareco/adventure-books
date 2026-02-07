@@ -1,6 +1,5 @@
 package prs.fmtareco.adventure.controller;
 
-import lombok.NonNull;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -33,7 +32,7 @@ public class BookController {
      * @return BookDetails with the fetched book content
      */
     @GetMapping("/{id}")
-    public ResponseEntity<@NonNull BookDetails> getBookDetails(@PathVariable Long id) {
+    public ResponseEntity<BookDetails> getBookDetails(@PathVariable Long id) {
         return ResponseEntity.ok(service.getDetails(id));
     }
 
@@ -103,7 +102,7 @@ public class BookController {
      * @return List of books (summary)
      */
     @GetMapping
-    public ResponseEntity<@NonNull List<BookSummary>> listAllBooks(
+    public ResponseEntity<List<BookSummary>> listAllBooks(
             @RequestParam(required = false) String title,
             @RequestParam(required = false) String author,
             @RequestParam(required = false) String category,
@@ -114,16 +113,16 @@ public class BookController {
             @RequestParam  (defaultValue = "true") boolean ascending
     ) {
         Sort sort = getBooksSort(ascending,
-                Optional.ofNullable(title),
-                Optional.ofNullable(author));
+                Optional.of(title),
+                Optional.of(author));
         Pageable pageable = PageRequest.of(page, size, sort);
         return ResponseEntity.ok(
                 service.listAllFiltered(
-                    Optional.ofNullable(title),
-                    Optional.ofNullable(author),
-                    Optional.ofNullable(category),
-                    Optional.ofNullable(difficulty),
-                    Optional.ofNullable(condition),
+                    Optional.of(title),
+                    Optional.of(author),
+                    Optional.of(category),
+                    Optional.of(difficulty),
+                    Optional.of(condition),
                     pageable
                 )
         );

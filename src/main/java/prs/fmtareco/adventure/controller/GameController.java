@@ -1,6 +1,5 @@
 package prs.fmtareco.adventure.controller;
 
-import lombok.NonNull;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -32,7 +31,7 @@ public class GameController {
      *
      */
     @PostMapping("/start/{book_id}")
-    public ResponseEntity<@NonNull GameDetails> startGame(@PathVariable Long book_id) {
+    public ResponseEntity<GameDetails> startGame(@PathVariable Long book_id) {
         GameDetails gd = gameService.startGame(book_id);
         return ResponseEntity.ok(gd);
     }
@@ -46,7 +45,7 @@ public class GameController {
      * @return List of SectionSummary
      */
     @GetMapping
-    public ResponseEntity<@NonNull List<@NonNull GameSummary>> getAllGames(
+    public ResponseEntity<List<GameSummary>> getAllGames(
             @RequestParam(required = false) String status,
             @RequestParam(value = "page", defaultValue = "0" ) int page,
             @RequestParam(value = "size", defaultValue = "10" ) int size,
@@ -54,7 +53,7 @@ public class GameController {
         Sort sort = getGamesSort(ascending);
         Pageable pageable = PageRequest.of(page, size, sort);
         return ResponseEntity.ok(
-                gameService.listAllGames(Optional.ofNullable(status), pageable)
+                gameService.listAllGames(Optional.of(status), pageable)
         );
     }
     /**
@@ -80,7 +79,7 @@ public class GameController {
      * @return GameDetails record with the game details & status
      */
     @GetMapping("/{game_id}")
-    public ResponseEntity<@NonNull GameDetails> getGameDetails(@PathVariable Long game_id) {
+    public ResponseEntity<GameDetails> getGameDetails(@PathVariable Long game_id) {
         return ResponseEntity.ok(gameService.getGameDetails(game_id));
     }
 
@@ -91,7 +90,7 @@ public class GameController {
      * @return GameDetails record with the game details & status
      */
     @PostMapping("/{game_id}/options/{option_no}")
-    public ResponseEntity<@NonNull GameDetails> takeOption(@PathVariable Long game_id, @PathVariable Integer option_no) {
+    public ResponseEntity<GameDetails> takeOption(@PathVariable Long game_id, @PathVariable Integer option_no) {
         GameDetails gd = gameService.takeOption(game_id, option_no);
         return ResponseEntity.ok(gd);
     }
