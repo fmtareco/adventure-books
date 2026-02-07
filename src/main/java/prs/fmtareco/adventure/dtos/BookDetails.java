@@ -8,7 +8,6 @@ import java.util.List;
 /**
  *
  * Book Details to be retrieved via API
- *
  * DTO Pattern (Data Transfer Object)
  */
 @Builder
@@ -19,5 +18,4 @@ public record BookDetails(
     String condition,
     String difficulty,
     List<String> categories
-//    List<String> sections
 ) implements Serializable {}

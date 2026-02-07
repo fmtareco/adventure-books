@@ -1,9 +1,11 @@
 package prs.fmtareco.adventure.service;
 
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import prs.fmtareco.adventure.dtos.GameDetails;
 import prs.fmtareco.adventure.dtos.GameOption;
+import prs.fmtareco.adventure.dtos.GameSummary;
 import prs.fmtareco.adventure.exceptions.*;
 import prs.fmtareco.adventure.model.*;
 import prs.fmtareco.adventure.repository.BookRepository;
@@ -97,6 +99,31 @@ public class GameService {
         return toGameDetails(game);
     }
 
+    /**
+     * returns a list of GameSummary with the selected games info
+     *
+     * @param pageable - handles the pagination and sorting settings
+     * @return List of books (summary)
+     */
+    public List<GameSummary> listAllGames(Optional<String> status, Pageable pageable) {
+        return status
+                .map(s -> gameRepo.findAllByStatus(Game.Status.from(s), pageable)
+                .stream()
+                .map(this::toGameSummary)
+                .toList())
+                .orElseGet(() -> gameRepo.findAll(pageable)
+                .stream()
+                .map(this::toGameSummary)
+                .toList());
+    }
+
+
+    /**
+     * restarts a game by refiling the health and moving to the book initial section
+     * Also updates the game status to RESTARTED
+     *
+     * @param game - context game
+     */
     private void restartGame(Game game) {
         game.setPreviousSection(game.getSection());
         game.setChosenOption(null);
@@ -249,4 +276,21 @@ public class GameService {
                 .options(getCurrentOptions(game))
                 .build();
     }
+
+    /**
+     * creates an instance of GameSummary DTO to return from an API call
+     * converts the context game details and status into teh DTO fields
+     *
+     * @param game - context game
+     * @return GameSummary DTO instance
+     */
+    private GameSummary toGameSummary(Game game) {
+        return GameSummary.builder()
+                .game(game.getId())
+                .book(game.getBook().getId())
+                .health(game.getHealth())
+                .status(game.getStatus().toString())
+                .build();
+    }
+
 }

@@ -5,15 +5,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import prs.fmtareco.adventure.dtos.BookDetails;
 import prs.fmtareco.adventure.dtos.BookSummary;
-import prs.fmtareco.adventure.dtos.SectionSummary;
 import prs.fmtareco.adventure.exceptions.BookNotFoundException;
 import prs.fmtareco.adventure.exceptions.CategoryNotFoundException;
 import prs.fmtareco.adventure.model.Book;
 import prs.fmtareco.adventure.model.Category;
-import prs.fmtareco.adventure.model.Section;
 import prs.fmtareco.adventure.repository.BookRepository;
 import prs.fmtareco.adventure.repository.CategoryRepository;
-import prs.fmtareco.adventure.repository.SectionRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,15 +23,12 @@ public class BookService {
 
 
     private final BookRepository bookRepo;
-    private final SectionRepository sectionRepo;
     private final CategoryRepository categoryRepo;
 
     public BookService(
             BookRepository bookRepo,
-            SectionRepository  sectionRepo,
             CategoryRepository  categoryRepo) {
         this.bookRepo = bookRepo;
-        this.sectionRepo = sectionRepo;
         this.categoryRepo = categoryRepo;
     }
 
@@ -73,20 +67,6 @@ public class BookService {
     public BookDetails getDetails(Long id) {
         Book book = bookRepo.findById(id).orElseThrow(() -> new BookNotFoundException(id));
         return toBookDetails(book);
-    }
-
-    /**
-     * returns a list of SectionSummary with the book sections
-     *
-     * @param id - identifies the book
-     * @param pageable - handles the pagination and sorting settings
-     * @return List of books (summary)
-     */
-    public List<SectionSummary> listAllSections(Long id, Pageable pageable) {
-        return sectionRepo.findByBookId(id, pageable)
-                .stream()
-                .map(this::toSectionSummary)
-                .toList();
     }
 
     /**
@@ -129,7 +109,7 @@ public class BookService {
     }
 
     /**
-     * disssociates a category from the book w/ key id
+     * disassociates a category from the book w/ key id
      * @param id book key
      * @param categoryName category to associate
      */
@@ -141,7 +121,7 @@ public class BookService {
     }
 
     /**
-     * disssociates a list of categories from the book w/ key id
+     * disassociates a list of categories from the book w/ key id
      * @param id book key
      * @param categories list of categories to associate
      */
@@ -205,24 +185,6 @@ public class BookService {
                                 .map(Category::getName)
                                 .collect(Collectors.toList()))
                 .difficulty(book.getDifficulty().toString())
-//                .sections(
-//                        book.getSections().stream()
-//                                .map(Section::getText)
-//                                .collect(Collectors.toList()))
-                .build();
-    }
-
-    /**
-     * to convert the selected Section to a
-     * SectionSummary DTO to return on the book details
-     * @param section - the section to be converted
-     * @return SectionSummary
-     */
-    public SectionSummary toSectionSummary(Section section) {
-        return SectionSummary.builder()
-                .id(section.getId())
-                .sectionNumber(section.getSectionNumber())
-                .text(section.getText())
                 .build();
     }
 }
