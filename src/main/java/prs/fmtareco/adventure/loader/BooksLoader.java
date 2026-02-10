@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.stereotype.Component;
+import prs.fmtareco.adventure.annotations.TrackExecution;
 import prs.fmtareco.adventure.loader.json.BookJson;
 import prs.fmtareco.adventure.loader.mapper.BookMapper;
 import prs.fmtareco.adventure.model.Book;
@@ -36,6 +37,7 @@ public class BooksLoader {
         this.bookMapper = bookMapper;
     }
 
+    @TrackExecution
     @PostConstruct
     public void loadAllBooks() {
         try {

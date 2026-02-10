@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import prs.fmtareco.adventure.annotations.TrackExecution;
 import prs.fmtareco.adventure.dtos.BookDetails;
 import prs.fmtareco.adventure.dtos.BookRequest;
 import prs.fmtareco.adventure.dtos.BookSummary;
@@ -37,6 +38,7 @@ public class BookService {
 
 
     @Transactional
+    @TrackExecution
     public BookDetails createBook(BookRequest request) {
         if (request.title()==null)
             throw new MissingValueException("title missing");
@@ -68,6 +70,7 @@ public class BookService {
      * @param pageable - handles the pagination and sorting settings
      * @return List of books (summary)
      */
+    @TrackExecution
     public Page<BookSummary> listAllFiltered(
             Optional<String> title,
             Optional<String> author,

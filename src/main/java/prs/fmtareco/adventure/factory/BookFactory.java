@@ -7,19 +7,14 @@ import prs.fmtareco.adventure.dtos.SectionRequest;
 import prs.fmtareco.adventure.dtos.OptionRequest;
 import prs.fmtareco.adventure.exceptions.CategoryNotFoundException;
 import prs.fmtareco.adventure.model.*;
-import prs.fmtareco.adventure.repository.BookRepository;
 import prs.fmtareco.adventure.repository.CategoryRepository;
 
 @Component
 public class BookFactory {
 
-    private final BookRepository bookRepo;
     private final CategoryRepository categoryRepo;
 
-    public BookFactory(
-            BookRepository bookRepo,
-            CategoryRepository  categoryRepo) {
-        this.bookRepo = bookRepo;
+    public BookFactory(CategoryRepository  categoryRepo) {
         this.categoryRepo = categoryRepo;
     }
 

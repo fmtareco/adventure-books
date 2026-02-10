@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import prs.fmtareco.adventure.annotations.TrackExecution;
 import prs.fmtareco.adventure.dtos.GameDetails;
 import prs.fmtareco.adventure.dtos.GameOption;
 import prs.fmtareco.adventure.dtos.GameSummary;
@@ -43,6 +44,7 @@ public class GameService {
      * @return GameDetails record with the game details & status
      *
      */
+    @TrackExecution
     @Transactional
     public GameDetails startGame(Long bookId) {
         Book book = bookRepo.findById(bookId)
@@ -100,6 +102,7 @@ public class GameService {
      * @param pageable - handles the pagination and sorting settings
      * @return List of books (summary)
      */
+    @TrackExecution
     public Page<GameSummary> listAllGames(Optional<String> status, Pageable pageable) {
         return status
                 .map(s -> gameRepo.findAllByStatus(Game.Status.from(s), pageable)
@@ -158,6 +161,7 @@ public class GameService {
      * @param game - context game
      * @param opt - Option instance applied to the game
      */
+    @TrackExecution
     public void applyOption(Game game, Option opt) {
         game.setPreviousSection(game.getSection());
         game.setChosenOption(opt);

@@ -232,12 +232,11 @@ public class Book {
     }
 
     public static Book create(String title, String author, Difficulty difficulty) {
-        Book book = Book.builder()
+        return Book.builder()
                 .title(title)
                 .author(author)
                 .difficulty(difficulty)
                 .build();
-        return book;
     }
 
 }

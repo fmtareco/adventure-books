@@ -16,7 +16,6 @@ import prs.fmtareco.adventure.service.BookService;
 public class BookMapper {
 
     private final SectionMapper sectionMapper;
-    private final BookService bookService;
     private final BookFactory bookFactory;
 
 
