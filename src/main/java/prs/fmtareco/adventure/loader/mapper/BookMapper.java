@@ -2,8 +2,11 @@ package prs.fmtareco.adventure.loader.mapper;
 
 
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import prs.fmtareco.adventure.factory.BookFactory;
+import prs.fmtareco.adventure.loader.BooksLoader;
 import prs.fmtareco.adventure.loader.json.BookJson;
 import prs.fmtareco.adventure.loader.json.SectionJson;
 import prs.fmtareco.adventure.model.Book;
@@ -14,6 +17,8 @@ import prs.fmtareco.adventure.service.BookService;
 @Component
 @RequiredArgsConstructor
 public class BookMapper {
+
+    private static final Logger log = LoggerFactory.getLogger(BookMapper.class);
 
     private final SectionMapper sectionMapper;
     private final BookFactory bookFactory;
@@ -34,7 +39,7 @@ public class BookMapper {
             try {
                 bookFactory.addCategoryToBook(book, categoryName);
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                log.error(e.getMessage());
             }
         }
     }
@@ -47,7 +52,7 @@ public class BookMapper {
                 Section section = sectionMapper.fromJson(sJson);
                 book.addSection(section);
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                log.error(e.getMessage());
             }
         }
     }

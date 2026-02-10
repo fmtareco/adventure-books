@@ -45,7 +45,7 @@ public class BooksLoader {
                     .getResources("classpath:books/lists/*.json");
             for (Resource jsonFile : jsonFiles) {
                 loadMultipleBooksResource(jsonFile);
-                System.out.println("loaded : " + jsonFile);
+                log.info("loaded : " + jsonFile);
             }
         } catch (Exception e) {
             log.error("Failed to scan multiple books JSON files", e);
@@ -55,7 +55,7 @@ public class BooksLoader {
                     .getResources("classpath:books/*.json");
             for (Resource jsonFile : jsonFiles) {
                 loadSingleBookResource(jsonFile);
-                System.out.println("loaded : " + jsonFile);
+                log.info("loaded : " + jsonFile);
             }
         } catch (Exception e) {
             log.error("Failed to scan single book JSON files", e);
