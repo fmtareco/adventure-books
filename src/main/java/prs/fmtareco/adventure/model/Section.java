@@ -2,6 +2,7 @@ package prs.fmtareco.adventure.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import prs.fmtareco.adventure.dtos.SectionRequest;
 import prs.fmtareco.adventure.exceptions.InvalidEnumValueException;
 
 import java.io.Serializable;
@@ -68,5 +69,12 @@ public class Section {
         option.setSection(this);
     }
 
-
+    public static Section create(int sectioNo, String text, Type type) {
+        Section section = Section.builder()
+                .sectionNumber(sectioNo)
+                .text(text)
+                .type(type)
+                .build();
+        return section;
+    }
 }

@@ -23,12 +23,11 @@ public class BookFactory {
         this.categoryRepo = categoryRepo;
     }
 
-    public Book fromRequest(BookRequest request) {
-        Book book = Book.builder()
-                .title(request.title())
-                .author(request.author())
-                .difficulty(Book.Difficulty.from(request.difficulty()))
-                .build();
+    public Book createBook(BookRequest request) {
+        Book book = Book.create(
+                request.title(),
+                request.author(),
+                Book.Difficulty.from(request.difficulty()));
         if (request.categories() != null) {
             request.categories().forEach(c -> addCategoryToBook(book, c));
         }
@@ -43,11 +42,10 @@ public class BookFactory {
     }
 
     private Section createSection(SectionRequest req) {
-        Section section = Section.builder()
-                .sectionNumber(req.id())
-                .text(req.text())
-                .type(Section.Type.from(req.type()))
-                .build();
+        Section section = Section.create(
+                req.id(),
+                req.text(),
+                Section.Type.from(req.type()));
         if (req.options() != null) {
             req.options().forEach(optReq -> {
                 Option option = createOption(optReq);
@@ -58,23 +56,18 @@ public class BookFactory {
     }
 
     private Option createOption(OptionRequest req) {
-        Option option = Option.builder()
-                .description(req.description())
-                .gotoSectionNumber(req.gotoId())
-                .build();
+        Option option = Option.create(req.description(), req.gotoId());
         if (req.consequence() != null) {
-            option.setConsequence(createConsequence(req.consequence(), option));
+            option.setOptionConsequence(createConsequence(req.consequence()));
         }
         return option;
     }
 
-    private Consequence createConsequence(ConsequenceRequest req, Option option) {
-        return Consequence.builder()
-                .type(Consequence.Type.from(req.type()))
-                .value(req.value())
-                .text(req.text())
-                .option(option)
-                .build();
+    private Consequence createConsequence(ConsequenceRequest req) {
+        return Consequence.create(
+                Consequence.Type.from(req.type()),
+                req.value(),
+                req.text());
     }
 
     /**

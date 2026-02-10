@@ -29,4 +29,16 @@ public class Option {
     @OneToOne(mappedBy = "option", cascade = CascadeType.ALL, orphanRemoval = true)
     private Consequence consequence;
 
+    public void setOptionConsequence(Consequence consequence) {
+        this.consequence = consequence;
+        this.consequence.setOption(this);
+    }
+
+    public static Option create(String description, int gotoSectionNumber) {
+        return Option.builder()
+                .description(description)
+                .gotoSectionNumber(gotoSectionNumber)
+                .build();
+    }
+
 }

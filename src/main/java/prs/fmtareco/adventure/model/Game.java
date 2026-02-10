@@ -31,11 +31,11 @@ public class Game {
     @JoinColumn(name = "section_id")
     private Section section;
 
-    @ManyToOne(optional = true)
+    @ManyToOne
     @JoinColumn(name = "previous_section_id")
     private Section previousSection;
 
-    @ManyToOne(optional = true)
+    @ManyToOne
     @JoinColumn(name = "option_id")
     private Option chosenOption;
 
@@ -65,6 +65,12 @@ public class Game {
         }
     }
 
-
+    public static Game create(Book book, Section section) {
+        Game game = new Game();
+        game.setBook(book);
+        game.setSection(section);
+        game.setStatus(Game.Status.STARTED);
+        return game;
+    }
 
 }

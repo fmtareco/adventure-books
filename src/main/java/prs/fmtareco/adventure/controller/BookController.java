@@ -1,6 +1,7 @@
 package prs.fmtareco.adventure.controller;
 
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -116,7 +117,7 @@ public class BookController {
      * @return List of books (summary)
      */
     @GetMapping
-    public ResponseEntity<List<BookSummary>> listAllBooks(
+    public Page<BookSummary> listAllBooks(
             @RequestParam(required = false) String title,
             @RequestParam(required = false) String author,
             @RequestParam(required = false) String category,
@@ -130,15 +131,13 @@ public class BookController {
                 Optional.ofNullable(title),
                 Optional.ofNullable(author));
         Pageable pageable = PageRequest.of(page, size, sort);
-        return ResponseEntity.ok(
-                bookService.listAllFiltered(
+        return bookService.listAllFiltered(
                     Optional.ofNullable(title),
                     Optional.ofNullable(author),
                     Optional.ofNullable(category),
                     Optional.ofNullable(difficulty),
                     Optional.ofNullable(condition),
                     pageable
-                )
         );
     }
 

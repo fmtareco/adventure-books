@@ -1,20 +1,19 @@
 package prs.fmtareco.adventure.service;
 
 import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import prs.fmtareco.adventure.dtos.BookDetails;
 import prs.fmtareco.adventure.dtos.BookRequest;
 import prs.fmtareco.adventure.dtos.BookSummary;
 import prs.fmtareco.adventure.exceptions.BookNotFoundException;
-import prs.fmtareco.adventure.exceptions.CategoryNotFoundException;
 import prs.fmtareco.adventure.exceptions.DuplicateBookException;
+import prs.fmtareco.adventure.exceptions.MissingValueException;
 import prs.fmtareco.adventure.factory.BookFactory;
 import prs.fmtareco.adventure.model.Book;
 import prs.fmtareco.adventure.model.Category;
 import prs.fmtareco.adventure.repository.BookRepository;
-import prs.fmtareco.adventure.repository.CategoryRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -39,13 +38,16 @@ public class BookService {
 
     @Transactional
     public BookDetails createBook(BookRequest request) {
-
+        if (request.title()==null)
+            throw new MissingValueException("title missing");
+        if (request.author()==null)
+            throw new MissingValueException("author missing");
         if (bookRepo.existsByTitleIgnoreCaseAndAuthorIgnoreCase(
                 request.title(), request.author())) {
             throw new DuplicateBookException(request.title(), request.author());
         }
 
-        Book book = factory.fromRequest(request);
+        Book book = factory.createBook(request);
 
 
         bookRepo.save(book);
@@ -66,7 +68,7 @@ public class BookService {
      * @param pageable - handles the pagination and sorting settings
      * @return List of books (summary)
      */
-    public List<BookSummary> listAllFiltered(
+    public Page<BookSummary> listAllFiltered(
             Optional<String> title,
             Optional<String> author,
             Optional<String> category,
@@ -74,9 +76,7 @@ public class BookService {
             Optional<String> condition,
             Pageable pageable) {
         return bookRepo.findAll(byFilters(title,author,category, difficulty, condition), pageable)
-                .stream()
-                .map(this::toBookSummary)
-                .toList();
+                .map(this::toBookSummary);
     }
 
     /**

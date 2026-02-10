@@ -3,7 +3,6 @@ package prs.fmtareco.adventure.model;
 import jakarta.persistence.*;
 import lombok.*;
 import prs.fmtareco.adventure.exceptions.InvalidEnumValueException;
-import prs.fmtareco.adventure.exceptions.InvalidSectionException;
 
 import java.io.Serializable;
 import java.util.*;
@@ -163,6 +162,12 @@ public class Book {
         }
     }
 
+    public boolean isValid() {
+        Condition cond = setBookCondition();
+        return cond ==  Condition.OK;
+    }
+
+
     /**
      * evaluates the book condition, aplying the valiations rules
      * @return Condition
@@ -182,8 +187,9 @@ public class Book {
     /**
      * updates the book condition, based on condition evaluation
      */
-    public void setBookCondition() {
+    public Condition setBookCondition() {
         condition = checkCondition();
+        return condition;
     }
 
 
@@ -223,6 +229,15 @@ public class Book {
         return getSections().stream()
                 .filter(s -> s.getType() != Section.Type.END)
                 .anyMatch(s -> s.getOptions().isEmpty());
+    }
+
+    public static Book create(String title, String author, Difficulty difficulty) {
+        Book book = Book.builder()
+                .title(title)
+                .author(author)
+                .difficulty(difficulty)
+                .build();
+        return book;
     }
 
 }

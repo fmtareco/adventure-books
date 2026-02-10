@@ -21,11 +21,7 @@ public class BookMapper {
 
 
     public Book fromJson(BookJson json) {
-        Book book = Book.builder()
-            .title(json.title())
-            .author(json.author())
-            .difficulty(json.difficulty())
-            .build();
+        Book book = Book.create(json.title(), json.author(),json.difficulty());
         fromJsonSections(book, json);
         fromJsonCategories(book, json);
         book.setBookCondition();

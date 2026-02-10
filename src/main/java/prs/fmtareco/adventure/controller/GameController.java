@@ -1,5 +1,6 @@
 package prs.fmtareco.adventure.controller;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -45,16 +46,14 @@ public class GameController {
      * @return List of SectionSummary
      */
     @GetMapping
-    public ResponseEntity<List<GameSummary>> getAllGames(
+    public Page<GameSummary> getAllGames(
             @RequestParam(required = false) String status,
             @RequestParam(value = "page", defaultValue = "0" ) int page,
             @RequestParam(value = "size", defaultValue = "10" ) int size,
             @RequestParam (defaultValue = "true") boolean ascending) {
         Sort sort = getGamesSort(ascending);
         Pageable pageable = PageRequest.of(page, size, sort);
-        return ResponseEntity.ok(
-                gameService.listAllGames(Optional.of(status), pageable)
-        );
+        return gameService.listAllGames(Optional.ofNullable(status), pageable);
     }
     /**
      * return the Games Sort criteria
@@ -94,4 +93,7 @@ public class GameController {
         GameDetails gd = gameService.takeOption(game_id, option_no);
         return ResponseEntity.ok(gd);
     }
+
+
+
 }

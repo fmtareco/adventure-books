@@ -14,6 +14,13 @@ import java.util.Map;
 public class GlobalExceptionHandler {
 
 
+    @ExceptionHandler(MissingValueException.class)
+    public ResponseEntity<ErrorInfo> handleResourceNotFound(
+            MissingValueException ex,
+            HttpServletRequest request) {
+        return getErrorResponse(ex, request, HttpStatus.BAD_REQUEST, null);
+    }
+
     /**
      * handles all exceptions related with failed resource selection
      *

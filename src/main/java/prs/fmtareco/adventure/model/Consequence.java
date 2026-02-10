@@ -49,4 +49,13 @@ public class Consequence {
             return EnumSet.allOf(Type.class).stream().map(Enum::toString).collect(Collectors.joining(","));
         }
     }
+
+    public static Consequence create(Type type, int healthValue, String text) {
+        return Consequence.builder()
+                .type(type)
+                .value(healthValue)
+                .text(text)
+                .build();
+    }
+
 }

@@ -1,6 +1,7 @@
 package prs.fmtareco.adventure.service;
 
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import prs.fmtareco.adventure.dtos.GameDetails;
@@ -53,10 +54,7 @@ public class GameService {
         Section section = book.getInitialSection()
                 .orElseThrow(()
                     -> new InvalidBookException(bookId, condition.toString()));
-        Game game = new Game();
-        game.setBook(book);
-        game.setSection(section);
-        game.setStatus(Game.Status.STARTED);
+        Game game = Game.create(book, section);
         gameRepo.save(game);
         return toGameDetails(game);
     }
@@ -74,14 +72,11 @@ public class GameService {
      * @return GameDetails record with the game details & status after
      */
     @Transactional
-    public GameDetails takeOption(Long gameId, Integer optionNo) {
+    public GameDetails takeOption(Long gameId, int optionNo) {
         Game game = gameRepo.findById(gameId)
                 .orElseThrow(()
                         -> new GameNotFoundException(gameId));
-        if (optionNo==0)
-            restartGame(game);
-        else
-            applyOption(game, chosenOption(game, optionNo));
+        applyOption(game, optionNo);
         gameRepo.save(game);
         return toGameDetails(game);
     }
@@ -105,16 +100,13 @@ public class GameService {
      * @param pageable - handles the pagination and sorting settings
      * @return List of books (summary)
      */
-    public List<GameSummary> listAllGames(Optional<String> status, Pageable pageable) {
+    public Page<GameSummary> listAllGames(Optional<String> status, Pageable pageable) {
         return status
                 .map(s -> gameRepo.findAllByStatus(Game.Status.from(s), pageable)
-                .stream()
                 .map(this::toGameSummary)
-                .toList())
+                )
                 .orElseGet(() -> gameRepo.findAll(pageable)
-                .stream()
-                .map(this::toGameSummary)
-                .toList());
+                .map(this::toGameSummary));
     }
 
 
@@ -124,7 +116,7 @@ public class GameService {
      *
      * @param game - context game
      */
-    private void restartGame(Game game) {
+    public void restartGame(Game game) {
         game.setPreviousSection(game.getSection());
         game.setChosenOption(null);
         Optional<Section> section = game.getBook().getInitialSection();
@@ -133,13 +125,24 @@ public class GameService {
         game.setStatus(Game.Status.RESTARTED);
     }
 
-    /**
-     * returns the option in position from the game current section
-     *
-     * @param game - context game
-     * @param optionNo - non-zero position of the option on the current section options array
-     * @return - Option instance correspondent to the input position
-     */
+
+    public void applyOption(Game game,  int optionNo) {
+        if (optionNo==0) {
+            restartGame(game);
+            return;
+        }
+        Option option = chosenOption(game, optionNo);
+        applyOption(game, option);
+    }
+
+
+        /**
+         * returns the option in position from the game current section
+         *
+         * @param game - context game
+         * @param optionNo - non-zero position of the option on the current section options array
+         * @return - Option instance correspondent to the input position
+         */
     private Option chosenOption(Game game, int optionNo) {
         List<Option> currentOptions = game.getSection().getOptions();
         if (optionNo>currentOptions.size())
@@ -155,7 +158,7 @@ public class GameService {
      * @param game - context game
      * @param opt - Option instance applied to the game
      */
-    private void applyOption(Game game, Option opt) {
+    public void applyOption(Game game, Option opt) {
         game.setPreviousSection(game.getSection());
         game.setChosenOption(opt);
         int sectionNumber = opt.getGotoSectionNumber();
@@ -163,8 +166,7 @@ public class GameService {
         if (section.isEmpty())
             throw new InvalidSectionException(sectionNumber);
         game.setSection(section.orElse(null));
-        setConsequence(game, opt.getConsequence());
-        setStatus(game);
+        applyConsequence(game, Optional.ofNullable(opt.getConsequence()));
     }
 
     /**
@@ -174,15 +176,18 @@ public class GameService {
      * @param game - context game
      * @param csq - Consequence instance applied to the game
      */
-    private void setConsequence(Game game, Consequence csq) {
-        if (csq == null)
-            return;
-        int health = game.getHealth();
-        if (csq.getType() == Consequence.Type.LOSE_HEALTH)
-            health -= csq.getValue();
-        else
-            health += csq.getValue();
-        game.setHealth(health);
+    public void applyConsequence(Game game, Optional<Consequence> csq) {
+        int csqValue = csq.map(Consequence::getValue).orElse(0);
+        if (csqValue>0) {
+            Consequence.Type type = csq.map(Consequence::getType).orElse(null);
+            int health = game.getHealth();
+            if (type == Consequence.Type.LOSE_HEALTH)
+                health -= csq.get().getValue();
+            else
+                health += csq.get().getValue();
+            game.setHealth(health);
+        }
+        setStatus(game);
     }
 
     /**
