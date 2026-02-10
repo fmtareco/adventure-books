@@ -4,20 +4,22 @@ info:
     version: 0.0.4
     description: Implement an adventure book REST API
 server:
-  port: ${SERVER_PORT:8080}
+  port: 8080
+
+logging:
+  level:
+    root: INFO
 
 spring:
   application:
     name: adventure
-  datasource:
-    url: jdbc:postgresql://localhost:5432/adventure
-    username: user
-    password: password
-  jpa:
-    properties:
-      hibernate:
-        ddl-auto: none
   sql:
     init:
       mode: always
-      platform: postgres
+      platform:
+        postgres
+  jpa:
+    hibernate:
+      ddl-auto: none
+  profiles:
+    active: dev

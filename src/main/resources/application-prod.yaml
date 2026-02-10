@@ -1,0 +1,18 @@
+
+server:
+  port: ${SERVER_PORT}
+
+logging:
+  level:
+    root: INFO
+
+spring:
+  application:
+    name: adventure
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: validate

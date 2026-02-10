@@ -1,0 +1,19 @@
+info:
+  app:
+    name: AdventureBooks
+    version: 0.0.4
+    description: Implement an adventure book REST API
+server:
+  port: ${SERVER_PORT:8080}
+
+#logging:
+#  level:
+#    root: DEBUG
+
+spring:
+  application:
+    name: adventure
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/adventure}
+    username: ${DB_USER:user}
+    password: ${DB_PASSWORD:password}
