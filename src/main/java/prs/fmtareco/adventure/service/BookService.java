@@ -5,16 +5,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import prs.fmtareco.adventure.annotations.TrackExecution;
-import prs.fmtareco.adventure.dtos.BookDetails;
-import prs.fmtareco.adventure.dtos.BookRequest;
-import prs.fmtareco.adventure.dtos.BookSummary;
+import prs.fmtareco.adventure.dtos.*;
 import prs.fmtareco.adventure.exceptions.BookNotFoundException;
 import prs.fmtareco.adventure.exceptions.DuplicateBookException;
 import prs.fmtareco.adventure.exceptions.MissingValueException;
+import prs.fmtareco.adventure.exceptions.SectionNotFoundException;
 import prs.fmtareco.adventure.factory.BookFactory;
-import prs.fmtareco.adventure.model.Book;
-import prs.fmtareco.adventure.model.Category;
+import prs.fmtareco.adventure.model.*;
 import prs.fmtareco.adventure.repository.BookRepository;
+import prs.fmtareco.adventure.repository.SectionRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,13 +26,16 @@ public class BookService {
 
 
     private final BookRepository bookRepo;
+    private final SectionRepository sectionRepo;
     private final BookFactory factory;
 
     public BookService(
             BookRepository bookRepo,
+            SectionRepository sectionRepo,
             BookFactory factory) {
         this.bookRepo = bookRepo;
         this.factory = factory;
+        this.sectionRepo =  sectionRepo;
     }
 
 
@@ -88,9 +90,22 @@ public class BookService {
      * @param id - id of the book to be retrieved
      * @return BookDetails with the selected book content
      */
-    public BookDetails getDetails(Long id) {
+    public BookDetails getBookDetails(Long id) {
         Book book = bookRepo.findById(id).orElseThrow(() -> new BookNotFoundException(id));
         return toBookDetails(book);
+    }
+
+    /**
+     * fetches the details of the section with the argument id, from the input
+     *
+     * @param bookId - id of the book to be retrieved
+     * @param sectionNumber - number of the section to be retrieved
+     * @return BookDetails with the selected book content
+     */
+    public SectionDetails getSectionDetails(Long bookId, Integer sectionNumber) {
+        Section section = sectionRepo.findByBookIdAndSectionNumber(bookId,sectionNumber)
+                .orElseThrow(() -> new SectionNotFoundException(bookId,sectionNumber));
+        return toSectionDetails(section);
     }
 
     /**
@@ -118,8 +133,6 @@ public class BookService {
         }
         bookRepo.save(book);
     }
-
-
 
     /**
      * disassociates a category from the book w/ key id
@@ -186,7 +199,55 @@ public class BookService {
                         book.getCategories().stream()
                                 .map(Category::getName)
                                 .collect(Collectors.toList()))
+                .sections(
+                        book.getSections().stream()
+                                .map(this::toSectionSummary)
+                                .collect(Collectors.toList()))
                 .difficulty(book.getDifficulty().toString())
+                .build();
+    }
+
+    /**
+     * to convert the arg section to a summary to display on the book details
+     * @param section - argument section
+     * @return - instance of SectionSummary
+     */
+    private SectionSummary toSectionSummary(Section section) {
+        return SectionSummary.builder()
+                .sectionNumber(section.getSectionNumber())
+                .type(section.getType().toString())
+                .text(section.getText())
+                .build();
+    }
+
+    /**
+     * to convert the arg section to a details info
+     * @param section - argument section
+     * @return - instance of SectionDetails
+     */
+    private SectionDetails toSectionDetails(Section section) {
+        return SectionDetails.builder()
+                .sectionNumber(section.getSectionNumber())
+                .type(section.getType().toString())
+                .text(section.getText())
+                .options(
+                        section.getOptions().stream()
+                                .map(this::toOptionSummary)
+                                .collect(Collectors.toList()))
+                .build();
+    }
+
+    /**
+     * to convert the arg option to a summary DTO
+     * @param option - argument section
+     * @return - instance of OptionSummary
+     */
+    private OptionSummary toOptionSummary(Option option) {
+        Optional<Consequence> csq = Optional.ofNullable(option.getConsequence());
+        return OptionSummary.builder()
+                .description(option.getDescription())
+                .gotoSectionNumber(option.getGotoSectionNumber())
+                .consequence(csq.map(Consequence::getText).orElse(""))
                 .build();
     }
 

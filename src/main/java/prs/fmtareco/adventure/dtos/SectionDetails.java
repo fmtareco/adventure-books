@@ -3,6 +3,7 @@ package prs.fmtareco.adventure.dtos;
 import lombok.Builder;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  *
@@ -10,10 +11,11 @@ import java.io.Serializable;
  * DTO Pattern (Data Transfer Object)
  */
 @Builder
-public record SectionSummary(
+public record SectionDetails(
     Integer sectionNumber,
     String type,
-    String text
+    String text,
+    List<OptionSummary> options
 ) implements Serializable {}
 
 

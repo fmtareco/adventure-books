@@ -8,10 +8,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import prs.fmtareco.adventure.dtos.BookDetails;
-import prs.fmtareco.adventure.dtos.BookRequest;
-import prs.fmtareco.adventure.dtos.BookSummary;
-import prs.fmtareco.adventure.dtos.CategoriesRequest;
+import prs.fmtareco.adventure.dtos.*;
 import prs.fmtareco.adventure.service.BookService;
 
 import java.util.ArrayList;
@@ -41,14 +38,26 @@ public class BookController {
 
 
     /**
-     * GET - /api/books{id}
+     * GET - /api/books/{id}
      * fetches a single book details
      * @param id - identifies the book to be fetched
      * @return BookDetails with the fetched book content
      */
     @GetMapping("/{id}")
     public ResponseEntity<BookDetails> getBookDetails(@PathVariable Long id) {
-        return ResponseEntity.ok(bookService.getDetails(id));
+        return ResponseEntity.ok(bookService.getBookDetails(id));
+    }
+
+    /**
+     * GET - /api/books/{bookId}/sections/{sectionId}
+     * fetches a single book details
+     * @param bookId - identifies the book that owns the section
+     * @param sectionId - identifies the section to be fetched
+     * @return SectionDetails with the fetched book content
+     */
+    @GetMapping("/{bookId}/sections/{sectionId}")
+    public ResponseEntity<SectionDetails> getSectionDetails(@PathVariable Long bookId, @PathVariable Integer sectionId) {
+        return ResponseEntity.ok(bookService.getSectionDetails(bookId, sectionId));
     }
 
     /**

@@ -9,6 +9,78 @@ This project implements a **Spring Boot REST API** that allows users to:
 * Persist game progress per game session
 * Manage categories and books
 
+# Deploying and Running the Application
+
+## Go to the application's main folder (where `pom.xml`, `Dockerfile`, and `docker-compose.yml` are located).
+
+## Build the API JAR:
+   ```bash
+   mvn clean install 
+   ```
+
+## Build the API Docker image:
+   ```bash
+   docker build -t fmtareco/adventure-books .
+   ```
+This creates the image `fmtareco/adventure-books`.
+
+## Launch the containers:
+   ```bash
+   docker compose up -d
+   ```
+## Configure Postgres server
+
+Launch pgAdmin:
+http://localhost:5050/browser/
+
+- provide a master password
+- create a new Server:
+- General/name: devices_server (example)
+- Connection/Host name: postgres
+- Connection/username: user
+- Connection/password: password
+
+## Using an API testing platform (e.g., Postman), test the main endpoint:
+   ```
+   http://localhost:8080/api/books
+   ```
+Try different HTTP methods to validate all API operations.
+
+## Access points
+
+```
+* API base: `http://localhost:8080/api`
+* Swagger UI: `http://localhost:8080/swagger-ui.html`
+* Actuator: `http://localhost:8080/actuator`
+```
+
+## Example Game Flow
+
+```
+POST /api/games/start/102
+→ STARTED
+GET  /api/games/{id}
+POST /api/games/{id}/options/1
+POST /api/games/{id}/options/2
+...
+→ SUCCEEDED or FAILED
+...
+POST /api/games/{id}/options/0
+...
+→ RESTARTED
+```
+
+## Examples APIgames Queries
+
+```
+
+GET /api/books?category=FICTION&condition=OK
+GET /api/books?condition=NO_OPTIONS
+GET /api/books/102/sections/200
+GET /api/games?status=RESTARTED
+GET /api/categories
+```
+
 
 # Objectives Covered
 
@@ -41,7 +113,7 @@ This project implements a **Spring Boot REST API** that allows users to:
 * **Test                - testing with JUnit and Mockito
 * **OpenAPI             - SpringDoc OpenAPI documentation and UI
 
-# 4. Project Structure
+# Project Structure
 
 ```
 
@@ -259,67 +331,6 @@ Effects:
 * No debug SQL
 
 ---
-
-# Deploying and Running the Application
-
-## Go to the application's main folder (where `pom.xml`, `Dockerfile`, and `docker-compose.yml` are located).
-
-## Build the API JAR:
-   ```bash
-   mvn clean install 
-   ```
-
-## Build the API Docker image:
-   ```bash
-   docker build -t fmtareco/adventure-books .
-   ```
-This creates the image `fmtareco/adventure-books`.
-
-## Launch the containers:
-   ```bash
-   docker compose up -d
-   ```
-## Configure Postgres server
-
-Launch pgAdmin:
-http://localhost:5050/browser/
-
-- provide a master password
-- create a new Server:
-- General/name: devices_server (example)
-- Connection/Host name: postgres
-- Connection/username: user
-- Connection/password: password
-
-## Using an API testing platform (e.g., Postman), test the main endpoint:
-   ```
-   http://localhost:8080/api/books
-   ```
-Try different HTTP methods to validate all API operations.
-
-## Access points
-
-```
-* API base: `http://localhost:8080/api`
-* Swagger UI: `http://localhost:8080/swagger-ui.html`
-* Actuator: `http://localhost:8080/actuator`
-```
-
-## Example Game Flow
-
-```
-POST /api/games/start/1
-→ STARTED
-GET  /api/games/{id}
-POST /api/games/{id}/options/1
-POST /api/games/{id}/options/2
-...
-→ SUCCEEDED or FAILED
-...
-POST /api/games/{id}/options/0
-...
-→ RESTARTED
-```
 
 ---
 
