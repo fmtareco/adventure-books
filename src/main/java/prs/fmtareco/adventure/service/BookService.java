@@ -160,6 +160,24 @@ public class BookService {
         bookRepo.save(book);
     }
 
+    /**
+     * executes a series of simulated games on the book, traversing all possible paths
+     * to detect loops, number of successful/failure paths
+     * @param id - id of the books
+     * @return BookSimulation with the summary of the simulations
+     */
+    public BookSimulation simulateBookPaths(Long id) {
+        Book book = bookRepo.findById(id).orElseThrow(() -> new BookNotFoundException(id));
+        GameSimulation simulation = new GameSimulation(book);
+        simulation.applyMoves();
+        return BookSimulation.builder()
+                .id(book.getId())
+                .title(book.getTitle())
+                .numberOfSuccessfulPaths(simulation.numberOfSuccessfulPaths())
+                .numberOfLoopPaths(simulation.numberOfLoopPaths())
+                .numberOfFailurePaths(simulation.numberOfFailedPaths())
+                .build();
+    }
 
 
 

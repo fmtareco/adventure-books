@@ -36,7 +36,6 @@ public class BookController {
         return new ResponseEntity<>(newBook, HttpStatus.CREATED);
     }
 
-
     /**
      * GET - /api/books/{id}
      * fetches a single book details
@@ -58,6 +57,18 @@ public class BookController {
     @GetMapping("/{bookId}/sections/{sectionId}")
     public ResponseEntity<SectionDetails> getSectionDetails(@PathVariable Long bookId, @PathVariable Integer sectionId) {
         return ResponseEntity.ok(bookService.getSectionDetails(bookId, sectionId));
+    }
+
+    /**
+     * GET /api/books/{bookId}/validate
+     * executes a series of simulated games on the book, traversing all possible paths
+     * to detect loops, number of successful/failure paths
+     * @param bookId - id of the book
+     * @return BookSimulation with the summary of the simulations
+     */
+    @GetMapping("/{bookId}/validate")
+    public ResponseEntity<BookSimulation> simulateBookPaths(@PathVariable Long bookId) {
+        return ResponseEntity.ok(bookService.simulateBookPaths(bookId));
     }
 
     /**

@@ -15,7 +15,7 @@ This project implements a **Spring Boot REST API** that allows users to:
 
 ## Build the API JAR:
    ```bash
-   mvn clean install 
+   mvn clean install -DskipTests 
    ```
 
 ## Build the API Docker image:
@@ -70,7 +70,14 @@ POST /api/games/{id}/options/0
 → RESTARTED
 ```
 
-## Examples APIgames Queries
+## Example Book Game Simulations 
+
+```
+GET /api/books/102/validate
+```
+
+
+## Examples API Queries
 
 ```
 
@@ -79,6 +86,7 @@ GET /api/books?condition=NO_OPTIONS
 GET /api/books/102/sections/200
 GET /api/games?status=RESTARTED
 GET /api/categories
+GET /api/books/102/validate
 ```
 
 
