@@ -9,10 +9,10 @@ logging:
 spring:
   application:
     name: adventure
-  datasource:
-    url: ${DB_URL}
-    username: ${DB_USER}
-    password: ${DB_PASSWORD}
   jpa:
     hibernate:
       ddl-auto: validate
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:adventure}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}

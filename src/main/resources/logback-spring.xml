@@ -44,7 +44,7 @@
 
     <!-- ========= SPRING PROFILE: DEV ========= -->
     <springProfile name="dev">
-        <root level="DEBUG">
+        <root level="INFO">
             <appender-ref ref="CONSOLE"/>
             <appender-ref ref="FILE"/>
             <appender-ref ref="ERROR_FILE"/>

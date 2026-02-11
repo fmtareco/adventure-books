@@ -1,5 +1,23 @@
 services:
 
+  adventure-api:
+    image:  fmtareco/adventure-books:latest
+    container_name: adventure-books
+    ports:
+      - "8080:8080"
+    networks:
+      - postgres
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      SERVER_PORT: 8080
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: adventure
+      DB_USER: user
+      DB_PASSWORD: password
+    depends_on:
+      - database
+
   database:
     container_name: postgres
     image: postgres
