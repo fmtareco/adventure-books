@@ -98,20 +98,32 @@ GET /api/categories
 # Technology Stack
 
 ## Core
-* **Java 21 (LTS)
-* **Maven project
-* **Initial dependencies:
-* **Spring Web 			- to support the Web REST API and embeded Apache Tomcat 
-* **Spring Data Jpa		- to handle the persistence using Hibernate
-* **PostgreSQL Driver	- to include PostgreSQL JDBC Driver
-* **Docker Compose      - support for docker compose auto launch
-* **Lombok				- to reduce boilerplate code
+* Java 21 (LTS)
+* Maven project
+* Initial dependencies:
+* Spring Web 			- to support the Web REST API and embeded Apache Tomcat 
+* Spring Data Jpa		- to handle the persistence using Hibernate
+* PostgreSQL Driver	    - to include PostgreSQL JDBC Driver
+* Docker Compose        - support for docker compose auto launch
+* Lombok				- to reduce boilerplate code
 
-* ## Aditional Technologies
-* **Actuator	        - to monitor application running status, namelly health
-* **AOP				    - to handle selective logging/tracing
-* **Test                - testing with JUnit and Mockito
-* **OpenAPI             - SpringDoc OpenAPI documentation and UI
+## Observability / Logging
+* Actuator	            - to monitor application running status, namelly health
+* Micrometer            - to collect metrics about running app 
+* Prometheus            - to store gathered metrics
+* Logback               - structured logging
+* AOP				    - to handle selective logging/tracing
+
+## Testing
+* JUnit 5
+* Mockito
+* MockMvc integration tests
+
+## Documentation 
+* Spring REST Docs
+* OpenAPI (springdoc)
+
+
 
 # Project Structure
 
@@ -313,22 +325,43 @@ Effects:
 ---
 
 
+# 10. Logging & Observability
+
+## Logging
+
+* **Logback configuration**
+* Console + rolling file logs
+* SQL logging configurable per profile
+
+## Actuator
+
+Exposed endpoints:
+
+```
+/actuator/health
+/actuator/info
+/actuator/metrics
+/actuator/loggers
+actuator/prometheus
+```
+
+---
+
 # Configuration Profiles
 
 ## Base (`application.yml`)
-
 * Shared JPA settings
 * Logging defaults
 
 ## Dev (`application-dev.yml`)
-
 * Local PostgreSQL / Docker
 * Verbose SQL logging
+* full Actuator exposure
 
 ## Prod (`application-prod.yml`)
-
 * Hardened logging
 * No debug SQL
+* limited Actuator exposure
 
 ---
 
