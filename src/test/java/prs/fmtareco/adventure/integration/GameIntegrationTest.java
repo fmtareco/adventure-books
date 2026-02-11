@@ -16,7 +16,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 
 @SpringBootTest
 @AutoConfigureMockMvc
-//@Testcontainers
 public class GameIntegrationTest {
     @Autowired
     private MockMvc mvc;
