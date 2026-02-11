@@ -11,7 +11,7 @@ This project implements a **Spring Boot REST API** that allows users to:
 
 # Deploying and Running the Application
 
-## Go to the application's main folder (where `pom.xml`, `Dockerfile`, and `docker-compose.yml` are located).
+Go to the application's main folder (where `pom.xml`, `Dockerfile`, and `docker-compose.yml` are located).
 
 ## Build the API JAR:
    ```bash
@@ -307,7 +307,6 @@ GET /api/games/{gameId}
 ```
 POST /api/games/{gameId}/options/{optionNo}
 ```
-
 Effects:
 
 * Moves to next section
@@ -325,15 +324,15 @@ Effects:
 * **Persistence errors** → translated via `@ControllerAdvice`
 
 ## HTTP responses
-
+```
 * `BAD_REQUEST 400` → invalid input
 * `NOT_FOUND 404` → resource not found
 * `NOT_ACCEPTABLE 406` → invalid or duplicated resource
-
+```
 ---
 
 
-# 10. Logging & Observability
+# Logging & Observability
 
 ## Logging
 
@@ -378,7 +377,7 @@ actuator/prometheus
 # Future Improvements
 
 * Authentication & user accounts
-* Game simulation and loops detection (aditional validation) 
+* Game simulation and loops and success paths detection  
 
 ---
 
