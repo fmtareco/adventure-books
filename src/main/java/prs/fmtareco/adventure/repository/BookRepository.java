@@ -60,7 +60,7 @@ public interface BookRepository extends JpaRepository<Book, Long>, JpaSpecificat
                         query.distinct(true); // prevent duplicates
                     });
 
-            return builder.and(predicates.toArray(new Predicate[predicates.size()]));
+            return builder.and(predicates.toArray(new Predicate[0]));
         };
     }
 
