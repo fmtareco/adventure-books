@@ -17,7 +17,6 @@ import prs.fmtareco.adventure.repository.SectionRepository;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static prs.fmtareco.adventure.repository.BookRepository.byFilters;
 
@@ -193,7 +192,7 @@ public class BookService {
                 .categories(
                         book.getCategories().stream()
                                 .map(Category::getName)
-                                .collect(Collectors.toList()))
+                                .toList())
                 .difficulty(book.getDifficulty().toString())
                 .build();
     }
@@ -213,11 +212,11 @@ public class BookService {
                 .categories(
                         book.getCategories().stream()
                                 .map(Category::getName)
-                                .collect(Collectors.toList()))
+                                .toList())
                 .sections(
                         book.getSections().stream()
                                 .map(this::toSectionSummary)
-                                .collect(Collectors.toList()))
+                                .toList())
                 .difficulty(book.getDifficulty().toString())
                 .build();
     }
@@ -248,7 +247,7 @@ public class BookService {
                 .options(
                         section.getOptions().stream()
                                 .map(this::toOptionSummary)
-                                .collect(Collectors.toList()))
+                                .toList())
                 .build();
     }
 

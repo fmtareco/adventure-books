@@ -1,5 +1,6 @@
 package prs.fmtareco.adventure.controller;
 
+import jakarta.annotation.Nullable;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -163,14 +164,14 @@ public class BookController {
      * @param _author - when present, the sort will be based on author name
      * @return Sort criteria
      */
-    protected Sort getBooksSort(boolean ascending, String _title, String _author) {
+    protected Sort getBooksSort(boolean ascending, @Nullable String _title, @Nullable String _author) {
         Optional<String> title = Optional.ofNullable(_title);
         Optional<String> author = Optional.ofNullable(_author);
         Sort.Direction direction = ascending ?
                 Sort.Direction.ASC:
                 Sort.Direction.DESC;
         List<Sort.Order> orders = new ArrayList<>();
-        if (title.isPresent() || !author.isPresent()) {
+        if (title.isPresent() || author.isEmpty()) {
             Sort.Order titleOrder = new Sort.Order(direction, "title");
             orders.add(titleOrder);
         }

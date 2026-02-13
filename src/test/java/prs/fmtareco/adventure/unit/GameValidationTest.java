@@ -12,8 +12,6 @@ import prs.fmtareco.adventure.service.GameService;
 import prs.fmtareco.adventure.support.TestBookFactory;
 import prs.fmtareco.adventure.support.TestGameFactory;
 
-import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)

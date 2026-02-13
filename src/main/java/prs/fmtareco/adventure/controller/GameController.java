@@ -1,5 +1,6 @@
 package prs.fmtareco.adventure.controller;
 
+import jakarta.annotation.Nullable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -47,7 +48,7 @@ public class GameController {
      */
     @GetMapping
     public Page<GameSummary> getAllGames(
-            @RequestParam(required = false) String status,
+            @RequestParam(required = false) @Nullable String status,
             @RequestParam(value = "page", defaultValue = "0" ) int page,
             @RequestParam(value = "size", defaultValue = "10" ) int size,
             @RequestParam (defaultValue = "true") boolean ascending) {

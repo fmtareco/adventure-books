@@ -1,12 +1,10 @@
 package prs.fmtareco.adventure.service;
 
 import org.springframework.stereotype.Service;
-import prs.fmtareco.adventure.dtos.*;
-import prs.fmtareco.adventure.model.*;
+import prs.fmtareco.adventure.model.Category;
 import prs.fmtareco.adventure.repository.CategoryRepository;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class CategoryService {
@@ -26,7 +24,7 @@ public class CategoryService {
         return categoryRepo.findAll()
                 .stream()
                 .map(Category::getName)
-                .collect(Collectors.toList());
+                .toList();
     }
     
 }

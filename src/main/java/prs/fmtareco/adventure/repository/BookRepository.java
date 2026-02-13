@@ -1,12 +1,12 @@
 package prs.fmtareco.adventure.repository;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-import prs.fmtareco.adventure.exceptions.InvalidEnumValueException;
 import prs.fmtareco.adventure.model.Book;
 import prs.fmtareco.adventure.model.Category;
 
@@ -16,21 +16,19 @@ import java.util.Optional;
 
 public interface BookRepository extends JpaRepository<Book, Long>, JpaSpecificationExecutor<Book> {
 
-    Optional<Book> findByTitleIgnoreCaseAndAuthorIgnoreCase(String title, String author);
-
     static Specification<Book> byFilters(
-                String _title,
-                String _author,
-                String _category,
-                String _difficulty,
-                String _condition) {
+            @Nullable String _title,
+            @Nullable String _author,
+            @Nullable String _category,
+            @Nullable String _difficulty,
+            @Nullable String _condition) {
         return (root, query, builder) -> {
             List<Predicate> predicates = new ArrayList<>();
 
             Optional<String> condition = Optional.ofNullable(_condition);
             condition.filter(c -> !c.isBlank())
                     .map(String::toUpperCase)
-                    .flatMap(c -> Book.Condition.fromString(c))
+                    .flatMap(Book.Condition::fromString)
                     .ifPresent(c -> predicates.add(builder.equal(root.get("condition"), c)));
 
             Optional<String> author = Optional.ofNullable(_author);
@@ -48,7 +46,7 @@ public interface BookRepository extends JpaRepository<Book, Long>, JpaSpecificat
             Optional<String> difficulty = Optional.ofNullable(_difficulty);
             difficulty.filter(d -> !d.isBlank())
                     .map(String::toUpperCase)
-                    .flatMap(d -> Book.Difficulty.fromString(d))
+                    .flatMap(Book.Difficulty::fromString)
                     .ifPresent(d -> predicates.add(builder.equal(root.get("difficulty"), d)));
 
             Optional<String> category = Optional.ofNullable(_category);
