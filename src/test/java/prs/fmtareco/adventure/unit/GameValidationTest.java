@@ -129,17 +129,17 @@ public class GameValidationTest {
 
         Consequence csqDown = Consequence.create(
                 Consequence.Type.LOSE_HEALTH, 6, "Lose 6");
-        service.applyConsequence(game, Optional.of(csqDown));
+        service.applyConsequence(game, csqDown);
         assertEquals(4, game.getHealth());
 
         Consequence csqUp = Consequence.create(
                 Consequence.Type.GAIN_HEALTH, 7, "Gain 7");
-        service.applyConsequence(game, Optional.of(csqUp));
+        service.applyConsequence(game, csqUp);
         assertEquals(11, game.getHealth());
 
         Consequence csqEnd = Consequence.create(
                 Consequence.Type.LOSE_HEALTH, 17, "Lose 17");
-        service.applyConsequence(game, Optional.of(csqEnd));
+        service.applyConsequence(game, csqEnd);
         assertEquals(-6, game.getHealth());
         assertSame(Game.Status.FAILED, game.getStatus());
     }

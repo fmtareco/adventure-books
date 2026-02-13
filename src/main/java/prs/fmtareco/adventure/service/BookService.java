@@ -74,11 +74,8 @@ public class BookService {
      */
     @TrackExecution
     public Page<BookSummary> listAllFiltered(
-            Optional<String> title,
-            Optional<String> author,
-            Optional<String> category,
-            Optional<String> difficulty,
-            Optional<String> condition,
+            String title, String author, String category,
+            String difficulty, String condition,
             Pageable pageable) {
         return bookRepo.findAll(byFilters(title,author,category, difficulty, condition), pageable)
                 .map(this::toBookSummary);

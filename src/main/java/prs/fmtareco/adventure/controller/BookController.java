@@ -147,16 +147,11 @@ public class BookController {
             @RequestParam(value = "size", defaultValue = "3" ) int size,
             @RequestParam  (defaultValue = "true") boolean ascending
     ) {
-        Sort sort = getBooksSort(ascending,
-                Optional.ofNullable(title),
-                Optional.ofNullable(author));
+        Sort sort = getBooksSort(ascending, title, author);
         Pageable pageable = PageRequest.of(page, size, sort);
         return bookService.listAllFiltered(
-                    Optional.ofNullable(title),
-                    Optional.ofNullable(author),
-                    Optional.ofNullable(category),
-                    Optional.ofNullable(difficulty),
-                    Optional.ofNullable(condition),
+                    title, author, category,
+                    difficulty, condition,
                     pageable
         );
     }
@@ -164,15 +159,13 @@ public class BookController {
     /**
      * return the Books Sort criteria
      * @param ascending - indicates the input sort direction
-     * @param title - the sort will be based on book title
-     * @param author - when present, the sort will be based on author name
+     * @param _title - the sort will be based on book title
+     * @param _author - when present, the sort will be based on author name
      * @return Sort criteria
      */
-    protected Sort getBooksSort(
-            boolean ascending,
-            Optional<String> title,
-            Optional<String> author
-            ) {
+    protected Sort getBooksSort(boolean ascending, String _title, String _author) {
+        Optional<String> title = Optional.ofNullable(_title);
+        Optional<String> author = Optional.ofNullable(_author);
         Sort.Direction direction = ascending ?
                 Sort.Direction.ASC:
                 Sort.Direction.DESC;

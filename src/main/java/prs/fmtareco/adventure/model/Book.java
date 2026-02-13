@@ -134,6 +134,13 @@ public class Book {
         public static String valuesToString() {
             return EnumSet.allOf(Difficulty.class).stream().map(Enum::toString).collect(Collectors.joining(","));
         }
+        public static Optional<Difficulty> fromString(String difficultyString) {
+            try {
+                return Optional.of(Book.Difficulty.from(difficultyString));
+            } catch (InvalidEnumValueException ex) {
+                return Optional.empty();
+            }
+        }
     }
 
     /**
@@ -160,6 +167,14 @@ public class Book {
         public static String valuesToString() {
             return EnumSet.allOf(Condition.class).stream().map(Enum::toString).collect(Collectors.joining(","));
         }
+        public static Optional<Condition> fromString(String conditionString) {
+            try {
+                return Optional.of(Book.Condition.from(conditionString));
+            } catch (InvalidEnumValueException ex) {
+                return Optional.empty();
+            }
+        }
+
     }
 
     public boolean isValid() {

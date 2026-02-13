@@ -119,6 +119,7 @@ public class GameService {
      *
      * @param game - context game
      */
+    @Transactional
     public void restartGame(Game game) {
         game.setPreviousSection(game.getSection());
         game.setChosenOption(null);
@@ -139,13 +140,13 @@ public class GameService {
     }
 
 
-        /**
-         * returns the option in position from the game current section
-         *
-         * @param game - context game
-         * @param optionNo - non-zero position of the option on the current section options array
-         * @return - Option instance correspondent to the input position
-         */
+    /**
+     * returns the option in position from the game current section
+     *
+     * @param game - context game
+     * @param optionNo - non-zero position of the option on the current section options array
+     * @return - Option instance correspondent to the input position
+     */
     private Option chosenOption(Game game, int optionNo) {
         List<Option> currentOptions = game.getSection().getOptions();
         if (optionNo>currentOptions.size())
@@ -170,7 +171,7 @@ public class GameService {
         if (section.isEmpty())
             throw new InvalidSectionException(sectionNumber);
         game.setSection(section.orElse(null));
-        applyConsequence(game, Optional.ofNullable(opt.getConsequence()));
+        applyConsequence(game, opt.getConsequence());
     }
 
     /**
@@ -178,9 +179,10 @@ public class GameService {
      * - increments or decrements the game health
      *
      * @param game - context game
-     * @param csq - Consequence instance applied to the game
+     * @param _csq - Consequence instance applied to the game
      */
-    public void applyConsequence(Game game, Optional<Consequence> csq) {
+    public void applyConsequence(Game game, Consequence _csq) {
+        Optional<Consequence> csq = Optional.ofNullable(_csq);
         int csqValue = csq.map(Consequence::getValue).orElse(0);
         if (csqValue>0) {
             Consequence.Type type = csq.map(Consequence::getType).orElse(null);

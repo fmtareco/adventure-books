@@ -19,57 +19,44 @@ public interface BookRepository extends JpaRepository<Book, Long>, JpaSpecificat
     Optional<Book> findByTitleIgnoreCaseAndAuthorIgnoreCase(String title, String author);
 
     static Specification<Book> byFilters(
-                Optional<String> title,
-                Optional<String> author,
-                Optional<String> category,
-                Optional<String> difficulty,
-                Optional<String> condition) {
+                String _title,
+                String _author,
+                String _category,
+                String _difficulty,
+                String _condition) {
         return (root, query, builder) -> {
             List<Predicate> predicates = new ArrayList<>();
 
+            Optional<String> condition = Optional.ofNullable(_condition);
             condition.filter(c -> !c.isBlank())
                     .map(String::toUpperCase)
-                    .flatMap(c -> {
-                        try {
-                            return Optional.of(Book.Condition.from(c));
-                        } catch (InvalidEnumValueException ex) {
-                            return Optional.empty();
-                        }
-                    })
-                    .ifPresent(c ->
-                            predicates.add(builder.equal(root.get("condition"), c))
-                    );
+                    .flatMap(c -> Book.Condition.fromString(c))
+                    .ifPresent(c -> predicates.add(builder.equal(root.get("condition"), c)));
 
+            Optional<String> author = Optional.ofNullable(_author);
             author.filter(a -> !a.isBlank())
                     .map(String::toLowerCase)
                     .ifPresent(a ->
                             predicates.add(builder.like(builder.lower(root.get("author")), "%" + a + "%")));
 
+            Optional<String> title = Optional.ofNullable(_title);
             title.filter(t -> !t.isBlank())
                     .map(String::toLowerCase)
                     .ifPresent(t ->
                             predicates.add(builder.like(builder.lower(root.get("title")), "%" + t + "%")));
 
+            Optional<String> difficulty = Optional.ofNullable(_difficulty);
             difficulty.filter(d -> !d.isBlank())
                     .map(String::toUpperCase)
-                    .flatMap(d -> {
-                        try {
-                            return Optional.of(Book.Difficulty.from(d));
-                        } catch (InvalidEnumValueException ex) {
-                            return Optional.empty();
-                        }
-                    })
-                    .ifPresent(d ->
-                            predicates.add(builder.equal(root.get("difficulty"), d))
-                    );
+                    .flatMap(d -> Book.Difficulty.fromString(d))
+                    .ifPresent(d -> predicates.add(builder.equal(root.get("difficulty"), d)));
 
+            Optional<String> category = Optional.ofNullable(_category);
             category.filter(c -> !c.isBlank())
                     .ifPresent(c -> {
                         Join<Book, Category> categoryJoin = root.join("categories", JoinType.INNER);
                         predicates.add(
-                                builder.equal(
-                                        builder.lower(categoryJoin.get("name")),
-                                        c.toLowerCase()
+                                builder.equal(builder.lower(categoryJoin.get("name")), c.toLowerCase()
                                 )
                         );
                         query.distinct(true); // prevent duplicates
